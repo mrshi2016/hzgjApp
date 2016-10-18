@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+	<script type="text/javascript">
+	/*设置页面的文字部分*/
+		var html = document.documentElement;
+			function onWindowResize() {
+			    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+
+			}
+		window.addEventListener('resize', onWindowResize);
+		onWindowResize();
+	</script>
+    <style>
+        /*公共样式*/
+			html,body{height: 100%; width:100%;}
+			li{list-style: none;}
+			*{padding:0;margin:0;}
+			a{text-decoration: none;color:#999;}
+			.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+			.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+		.contents{width: 100%;height: 18.93rem;}
+		.imgBox{width: 18.93rem; position: fixed; height: 18.93rem;  left: 0.5rem;}
+		.imgBox img{display: block; margin: auto auto;width: 100%;}
+		.wen{width: 18.93rem;margin-top: 1rem;}
+		.wen p{text-align: center;font-size: 0.85rem;color: #666;}
+		.imgbox{width: 18.93rem;margin: 0 auto;}
+		.imgbox ul{-webkit-box-align: center;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+		.imgbox ul li{height:4rem;font-size: 0.69rem;-webkit-box-flex: 4;text-align: center; color: #999; }
+		.imgbox ul li img{height:4rem;width: 4rem}
+		.tabMenu{background-repeat: no-repeat; background-position-y:center;background-position-x:center; }
+		.tabMenu1{background-image: url(../img/ecwxz.png); background-size: 2.26rem 2.26rem;}
+		.tabMenu2{background-image: url(../img/scwxz.png); background-size: 2.26rem 2.26rem;}
+		.tabMenu3{background-image: url(../img/sscwxz.png); background-size: 2.26rem 2.26rem;}
+		.tabMenu4{background-image: url(../img/scwxz.png); background-size: 2.26rem 2.26rem;}
+		.tabMenu5{background-image: url(../img/wcwxz.png); background-size: 2.26rem 2.26rem;}
+		.select0{background-image: url(../img/ecxz.png);background-size: 3.73rem 3.73rem; background-repeat: no-repeat;}
+		.select1{background-image: url(../img/scxz.png);background-size: 3.73rem 3.73rem; background-repeat: no-repeat;}
+		.select2{background-image: url(../img/sscxz.png);background-size: 3.73rem 3.73rem; background-repeat: no-repeat;}
+		.select3{background-image: url(../img/wcxz.png);background-size: 3.73rem 4rem; background-repeat: no-repeat;}
+		.buttomBox{ margin-left: 1rem; margin-top: 3rem;}
+		#imgSize{position: relative;}
+		#imgSize img{position:absolute;}
+		.zlName{position: absolute;font-size: 0.64rem;border-radius: 3px; background-color: rgba(135,182,246,0.8);border: 1px solid #fff; padding: 0.5rem;min-width: 1rem;
+			-webkit-transition: all 1s;
+			 opacity: 0;
+			-webkit-transform:scale(0.02);
+			transform:scale(0.02);color: #fff;}
+		#myImg0{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg1{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg2{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg3{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg4{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg5{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg6{width:0.8rem; height:1.4rem;position:absolute; }
+		#myImg7{width:0.8rem; height:1.4rem;position:absolute; }
+		.avat{opacity: 1; -webkit-transform:scale(1); transform:scale(1);}
+		#ggss{position: absolute; z-index: 900; display: none !important;}
+    </style>
+</head>
+<body>
+	<div class="contents clearfix" tapmode >
+		<div id="contents">
+		</div>
+		<div class="buttomBox">
+			<div class="wen clearfix">
+			<p id="lc">二层</p>
+		</div>
+		<div class="imgbox">
+			<ul>
+				<li onclick="fnChangeNav(0)" tapmode class="tabMenu tabMenu1 select0"></li>
+				<li onclick="fnChangeNav(1)" tapmode class="tabMenu tabMenu2"></li>
+				<li onclick="fnChangeNav(2)" tapmode class="tabMenu tabMenu3"></li>
+				<li onclick="fnChangeNav(3)" tapmode class="tabMenu tabMenu4"></li>
+			</ul>
+		</div>
+		</div>
+		
+	</div>
+	<script id="template" type="text/template">
+		<div class="imgBox" id="imgSize">
+		{{~ it.booth:result}}
+		{{?result.exhibits != undefined }}
+		<div class="zlName clearfix" id="zlName">{{=result.exhibits[0].titleName}}</div>
+		{{?}}
+		{{~}}
+			<img id='ggss' src="../img/ggss2.png" alt="">
+			<img  tapmode src="{{=it.pic == null||it.pic=='' ? '../img/mrtp.png':it.pic}}" alt="" />
+		</div>
+	</script>
+    
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/globalData.js"></script>
+<script type="text/javascript" src="../script/localdb.js"></script>
+<script type="text/javascript">
+ var imgboxSize;
+ var imgbox,zlData;
+    apiready = function(){
+      fnInitData(floors);
+      tabMenus = $api.domAll('.tabMenu');
+    };
+    var floors = 2;
+    var num = 2;
+  	var retA; 
+	var obj;
+	var thisI;
+	var boo;
+	var arrLength; 
+    /*初始hauler数据*/
+    function fnInitData(floors){
+       	api.showProgress({
+			    style: 'default',
+			    animationType: 'fade',
+			    title: '努力加载中...',
+			    /*text: '先喝杯茶...',*/
+			    modal: false
+			});
+       	api.ajax({
+                url: globalConfig.dlUrl+'?'+'floor'+'='+floors,
+                method: 'get',
+                timeout:40,
+                cache:true,
+                data: {},
+                files: { 
+                      file: ''
+                 },
+                },function(ret, err){
+	                if (ret) {
+	                	api.hideProgress();
+	                	/*var urlD = ret.result.url3D;*/
+	                	var template = $api.byId('template');
+						var dot = doT.template(template.innerHTML);
+						/*判断数据是否为空*/
+						if( ret.booth == ''){
+	                		retA = 'kong'
+	                	}	                	
+						$api.byId("contents").innerHTML= dot(ret);
+						 imgbox= $api.byId('imgSize');
+						/*alert(ret.booth.length)*/
+						arrLength = ret.booth.length;
+						if(ret.booth.length> 0){
+							for(var i=0;i<ret.booth.length;i++){
+							if(ret.booth[i].exhibits == undefined){
+
+							}else{
+								fnCreatArea(ret.booth[i],imgbox,i,true);
+							 	retA = ret.booth[i];
+							 	obj = imgbox;
+							 	thisI = i;
+							 	boo = true;	
+							}
+						 	
+						 }
+							 /*获取 并设置楼层公共设施的图片*/
+							var gs = $api.byId('ggss');
+	    					$api.attr(gs, 'src', AAArecommendList[floors-2]);
+						}
+	                } else {
+	                    //alert(JSON.stringify(err));
+	                     api.toast({
+						    msg: '加载失败',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+	                     api.hideProgress();
+
+	                }
+
+	            });
+
+    }
+     /*绘制矩形*/
+     function fnCreatArea(){
+     	/*接受传递的参数*/
+    	if(arguments.length == 1){
+    		boo = arguments[0];
+    	}
+    	if(arguments.length > 2)
+    	{
+    		retA= arguments[0];
+    		obj = arguments[1];
+    		thisI = arguments[2];
+    		boo= arguments[3];
+    	}
+    	/*文字提示框的當前位置*/
+    	if(retA == 'kong'){
+	    		if(boo == false){
+	    		 	var gs = $api.byId('ggss');
+			 	  	$api.css(gs,'display:block !important;');
+			   }else{
+			   		var gs = $api.byId('ggss');
+			 	  	$api.css(gs,'display:none !important;');
+			   }
+    	}else{
+    		/*currId= retA.exhibitId;*/
+    		var exhibitName;
+    		if(retA.exhibits == undefined || retA.exhibits == ''){
+    			exhibitName	='';
+    		}else{
+				exhibitName= retA.exhibits[0].titleName;
+    		}
+    		
+	    	$api.append(obj,'<div id='+thisI+'></div>');
+	    	/*获得本地图片的高度算出比例*/
+	    	var imgHeight = $api.offset(imgbox);
+	    	var bl = imgHeight.w/450;
+	    	//alert(JSON.stringify(retA))
+	    	 /*当前绘制矩形的长宽以及位置*/
+	    	var currWidth = bl*retA.rectW;
+	    	var currHeight = bl* retA.rectH;
+	    	var currTop = bl * retA.pointY;
+	    	var currLeft = bl* retA.pointX;
+	    	var currBack = retA.colour;
+	    	var smallId = 'myImg'+thisI;
+	    	currObj= $api.byId(thisI);
+	    	$api.css(currObj,'width:'+currWidth+'px;height:'+currHeight+'px;position: absolute;top:'+currTop+'px;left:'+currLeft+'px; background-color:'+currBack+';opacity: 0.4;');
+    		/*創建小图标*/
+    		$api.html(currObj,'<img id='+smallId+' tapmode src="../img/dqwz.png" alt="" />');
+			/*获取小图标*/
+	    	var currobjImg = $api.byId(smallId);
+	    	var currImgW = $api.offset(currobjImg).w;
+	    	var currImgH = $api.offset(currobjImg).h;
+	    	/*图片在绘制的矩形中显示的位置*/
+	    	var currImgLeft = currWidth /2 - currImgW/2;
+	    	var crrrImgTop = currHeight/2 - currImgH/2;
+
+	    	 /*设置小图标的位置*/
+    		$api.css(currobjImg,'left:'+currImgLeft+'px; top:'+crrrImgTop+'px;opacity:1;');
+    		document.getElementById(smallId).data = retA;
+    		
+    		/*获取展的名称*/
+	    	var txts = $api.byId('zlName');
+	    	/*公共设施图片*/
+	    	var gs = $api.byId('ggss');
+	    	/*默认让公共设施图片隐藏*/
+	    	$api.css(gs,'display:none !important;');
+			/*设置让展览名称默认为隐藏*/
+    		$api.css(txts,'display:block;opacity:1;');
+    		/*设置文本框位置*/
+    		/*文本框的高*/
+    		var aH = $api.offset(txts).h;
+    		/*文本框宽*/
+    		var aW =  $api.offset(txts).w;
+    		
+	    	currY =0;
+	    	currX = 0;
+		/*设置文本框位置结束*/	    		
+	    //	$api.css(txts,'top:'+currImgLeft+'px;left:'+crrrImgTop+'px;');
+    		/*设置文本框位置*/
+		/* $api.css(txts,'top:'+currY+'px;left:'+currX+'px;');*/
+		   if(boo == false){
+		 	  	/*
+		 	  	用来设置显示公共设施
+		 	  	*/
+		 	  	for(var i= 0; i< arrLength; i++){
+		 	  		var myid = 'myImg'+thisI;
+		 	  		var thisid = i;
+		 	  		currobjImg = $api.byId(myid);
+		 	  		currObj= $api.byId(thisid);
+		 	  		$api.css(gs,'display:block !important;');
+					$api.css(txts,'display:block;opacity:0;');
+					$api.css(currObj,'opacity: 0;');
+					$api.css(currobjImg,'opacity:0;');
+					$api.removeCls(txts,'avat');
+		 	  	}
+		   }else{
+		   		/*
+		 	  	用来设置隐藏公共设施
+		 	  	*/
+		   		for(var i= 0; i< arrLength; i++){
+		 	  		var myid = 'myImg'+thisI;
+		 	  		var thisid = i;
+		 	  		currobjImg = $api.byId(myid);
+		 	  		currObj= $api.byId(thisid);
+		 	  		$api.css(gs,'display:none !important;');
+					$api.css(txts,'display:block;opacity:0;');
+					$api.css(currObj,'opacity: 0.4;');
+					$api.css(currobjImg,'opacity:1;');
+		 	  	}
+		   }
+     	var bool = false;
+    	currobjImg.onclick = function(){
+    		var textX = this.offsetLeft +40;
+    		var textY = this.offsetTop +40;
+    		if(bool == false){
+    			if(textY < 10){
+		    		textY = textY + aH;
+		    		textX = textX + aW;
+		    	}
+		    	if(textX < 10){
+					textY = textY + aH;
+		    		textX = textX + aW;
+		    	}
+		    	//alert(currY)
+		    	$api.addCls(txts,'avat');
+	    		$api.css(txts,'top:'+textY+'px;left:'+textX+'px; z-index:888;opacity:1;');
+    		}else{
+    			$api.removeCls(txts,'avat');
+    			//$api.css(txts,'top:'+currTop+'px;left:'+currX+'px;');
+    			currX = (currLeft/2);
+    			$api.css(txts,'top:'+currTop+'px;left:'+currX+'px; z-index:888;opacity:0;');
+    		}
+    		//alert(a)
+    		txts.data = this.data;
+    		txts.innerHTML=txts.data.exhibits[0].titleName;
+    		bool = !bool;
+    	}
+    	/*点击矩形块跳转到对应的展览*/
+    	txts.onclick = function(){
+    		currData= txts.data;
+    		currData.exhibits[0].collect='';
+    		api.openWin({
+	            name: 'zxxq_frame',
+	            url: 'zxxq_frame.html',
+	            bgColor:'#fff',
+	            vScrollBarEnabled:false,
+	            hScrollBarEnabled:false,
+	            pageParam: {
+	            	Dldata: currData.exhibits[0],
+	            	dlList:'dl'
+	            }    	
+	        });
+    	}
+    }
+  }
+    /*楼层按钮*/
+    var tabMenus=[];
+    var lcArry = ["二层","三层","四层","五层"];
+    /*切换底部按钮的状态*/
+    function fnChangeNav(index){
+    	/*自定义事件用来监听导览头部按钮是否改变*/
+    	api.sendEvent({
+		    name: 'myEvent',
+		    extra: {key:'false'}
+		});
+    	var lc = $api.byId('lc');
+    	$api.text(lc, lcArry[index]);
+    	for(var i=0; i<tabMenus.length;i++)
+    	{
+    		if(i == index){
+    			$api.addCls(tabMenus[i], 'select'+i);
+    		}else{
+    			$api.removeCls(tabMenus[i], 'select'+i);
+    		}
+    	}
+    	/*切换状态完成后刷新数据*/
+    	fnInitData(floors+index);
+    	var imgId = floors+index;
+    	var gs = $api.byId('ggss');
+    	$api.attr(gs, 'src', '../img/ggss'+imgId+'.png');
+    }
+ 
+</script>
+</html>

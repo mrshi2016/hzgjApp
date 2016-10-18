@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<script type="text/javascript">
+		/*设置页面的文字部分*/
+			var html = document.documentElement;
+				function onWindowResize() {
+				    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+				}
+			window.addEventListener('resize', onWindowResize);
+			onWindowResize();
+		</script>
+	<style type="text/css">
+	/*公共样式*/
+	html,body{height: 100%; width:100%;}
+	li{list-style: none;}
+	*{padding:0;margin:0;}
+	a{text-decoration: none;color:#999;}
+	.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+	.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+	/*公共样式结束*/
+	.contents{width: 100%;}
+	.imgBox{margin-top:0.64rem;}
+	.imgBox img{max-width:18.93rem; max-height: 18.93rem;display: block;margin: 0 auto;}
+	.wen{width: 18.93rem; margin: 1rem auto; padding-bottom: 1rem; border-bottom:1px solid #ddd;}
+	/* .wen p{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;} */
+/* 	.contentWens{overflow: hidden;white-space: nowrap;text-overflow: ellipsis; height: 2.6rem;} */
+	.wen p:nth-child(1){font-size: 0.85rem; color: #333;}
+	.wen p:nth-child(2){font-size: 0.69rem; color: #666; margin-top:0.8rem;}
+	.wen p:nth-child(2) span{padding-left: 0.85rem;}
+	.wen p:nth-child(3) span{padding-left: 0.85rem;}
+	.wen p:nth-child(3){font-size: 0.69rem; color: #666; margin-top:0.53rem;}
+	.wen p:nth-child(4){font-size: 0.69rem; color: #666; margin-top:0.69rem;}
+	.wen input{-webkit-appearance: none;margin-top:0.26rem; border-radius:0;width: 100%;border: none; height: 1.33rem; background: #dbe9fc;color:#FFFFFF;font-size: 0.64rem;position: relative;}
+	.wen input:active{top: 2px;}
+	.picBox{margin-left: 0.2rem;}
+	.picBox ul li{float:left;width:4.7rem; height:4.7rem; border:1px solid #ddd;margin-left: 2px;position: relative;}
+	.picBox ul li:first-child{margin-left: 0;}
+	.picBox li img{max-width: 4.7rem;max-height:4.7rem;margin: auto auto; left: 0; right: 0; bottom: 0;top: 0; position: absolute;}
+	.picBox li:last-child img{max-width: 4.76rem;max-height: 4.76rem;}
+	.picBox ul li:last-child{position: relative;}
+	.picBox ul li:last-child .gd{position: absolute;top: 0;left: 0;}
+	.bttn{width: 18.93rem; height: 3.3rem;margin: 1rem auto;}
+	.videoBox{width: 9.4rem; height: 3.3rem; float: left;border-right:1px solid #ddd; }
+	.videoBox img{max-width: 9.4rem;max-height: 3.3rem;}
+	.houseBox{width: 9.4rem;height: 3.3rem;  float: left;}
+	.houseBox img{max-width: 9.4rem;max-height: 3.3rem;}
+	.qj{width:18.93rem;  margin: 1rem auto;position:relative; border-bottom:1px solid #ddd;height:11rem;}
+	.mask{width:18.93rem; height: 100%; background: rgba(0,0,0,0.5); z-index: 997;  position: absolute;}
+	.qj img{max-width: 18.93rem; max-height: 11rem; margin: auto auto; left: 0;right: 0;top: 0; bottom: 0; position: absolute;}
+	.qj p{text-align: center;position: absolute; top: 56%;left: 50%;  margin-left: -1.7rem; font-size: 0.85rem;color: #FFFFFF;z-index: 997;}
+	.qj{border-bottom: none;}
+	.qj .tb{position: absolute; max-width: 2.66rem; left: 50%; margin-left: -1.33rem; top:50%; margin-top: -1.5rem; z-index: 999;}
+	.contentWens{overflow: hidden; height: 2.6rem;font-size: 0.85rem;display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;}
+	.contentWens p{font-size: 0.69rem !important;}
+	.wenzi p{font-size: 0.69rem !important; color: #666 !important;text-indent: 1.8em;}
+	.jpxs{ padding-bottom: 0.1rem; margin-top:-0.6rem;text-align: center;font-size: 0.81rem;color:#87b6f6;}
+	.jpxs img{max-height: 1.5rem;}
+    </style>
+</head>
+<body>
+<!-- 展讯详情页 -->
+	<div class="contents" id="contents">
+	</div>
+	<script id="template" type="text/template">
+		<div class="imgBox">
+			<img src="{{= it.cover == null || it.cover == ''?  '../img/mrtp.png':it.cover}}" alt="" />
+		</div>
+		<div class="wen">
+			<p>{{= it.titleName == undefined? '' : it.titleName }}</p>
+			<p>
+				展览时间:
+				<span>{{=it.startDate == undefined? '' : it.startDate.substr(0,10)}}~{{=it.endDate == undefined? '' : it.endDate.substr(0,10)}}</span>
+			</p>
+			<p>
+				展览地点:
+				<span>{{=it.exLocation == undefined? '' : it.exLocation}}</span>
+			</p>
+			<div class="contentWens wenzi" id='contentWen'>
+				{{=it.exDescription == undefined? '' : it.exDescription}}
+			</div>
+			<input tapmode class="highlight-color" onclick="fnContentWen()" type="submit" id="button" value="更多展览介绍" />
+		</div>
+		<div class='jpxs'><img src="../img/jpxs.png" alt=""></div>
+		<div class="picBox">
+			<ul class="clearfix" >
+			{{~ it.artworks.wwInfo:recommend:index}}
+				<li tapmode onclick="fnOpenWinFrame({{=index}})">
+				<img src="{{=recommend.conver == null||recommend.conver=='' ? '../img/mrtp.png':recommend.conver}}" alt="">
+				{{? index== it.artworks.wwInfo.length-1}}
+					<img tapmode onclick="fnOpenWinList('list')" style="height: 2rem;width: 3rem;  display: block; margin-top: 1.35rem; margin-left: 0.85rem; "  class="gd" src="../img/bbc_03.png" />
+				{{?}}
+				</li>
+			{{~}}
+			</ul>
+		</div>
+		<div class='bttn clearfix'>
+			<div class="videoBox">
+			 <img src="../img/spmrt_03.png" tapmode onclick="fnOpenVideo('{{=it.videoUrl}}')" alt="" />
+			</div>
+			<div class="houseBox">
+				<img tapmode='' onclick="fnOpenWin()" src="../img/sdmrt_03.png" alt="" />
+			</div>
+		</div>
+		
+		<div class="qj clearfix" id='qj'>
+			<img class='tb' tapmode onclick="fnOpenQJZL('{{=it.piano}}')"  src="../img/qjan_03.png" alt="">
+			<div class='mask clearfix' id='mask' tapmode onclick="fnOpenQJZL('{{=it.piano}}')" >
+			</div>
+			<img tapmode onclick="fnOpenQJZL('{{=it.piano}}')" src="{{=it.piano+'/index.jpg' == null || it.piano+'/index.jpg' ==  'undefined/index.jpg' ? '../img/qjt_03.png':it.piano+'/index.jpg'}}" alt="" />
+			<p>全景展览</p>
+		</div>
+	</script>
+</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript" src="../script/globalData.js"></script>
+	<script type="text/javascript" src="../script/localdb.js"></script>
+	<script type="text/javascript">
+	var vue;
+	var exhId;
+	var aobj;
+	var arts,ww3d,dataList,gj3d,List3d,list;
+    apiready = function(){
+    	exhId= api.pageParam.id;
+    	list = api.pageParam.list;
+		fnInitPullRefresh();
+        var template = $api.byId('template');
+		var dot = doT.template(template.innerHTML);
+		dataList = api.pageParam.data == undefined? api.pageParam.dlData : api.pageParam.data;
+		//var aaaaa = $api.byId('contentWen');
+		var beforeDes = "<p>"+dataList.exDescription+"</p>";
+		beforeDes = beforeDes.replace(/\r\n/g,'</p><p>');
+		dataList.exDescription = beforeDes;
+		var wwList = dataList.artworks.wwInfo || [];
+		var gjList = dataList.artworks.gjInfo || [];
+		arts = wwList.concat(gjList);
+		ww3d = dataList.artworks.ww3D;
+		gj3d = dataList.artworks.gj3D;
+		List3d = ww3d.concat(gj3d);
+		/*alert(arts.length)*/
+	   	if(arts.length > 0){
+	    	//	alert(0)
+    		for(var i=0;i<arts.length;i++){
+        		if(i<4){
+        			exhibits.push(arts[i]);
+        		}
+        	}
+        	dataList.artworks.wwInfo = exhibits;
+    	}
+    	/*设置图片的大小*/
+    	   for(var item = 0; item < exhibits.length; item++)
+	        {
+	            var str = getImagePoster(exhibits[item].conver,'414x414');
+	           	exhibits[item].conver = str;
+	        }
+	     for(var items = 0; items < List3d.length; items++)
+	        {
+	            var str = getImagePoster(List3d[items].conver,'212x212');
+	           	List3d[items].conver = str;
+	        }
+
+    	$api.byId("contents").innerHTML= dot(dataList);	
+    
+    	/*alert(JSON.stringify(dataList.artworks.wwInfo))*/
+		/*if(dataList.panoramaUrl == '' || dataList.panoramaUrl == null){
+    		aobj = $api.byId('mask');
+    		$api.css(aobj,'display:none;opacity:0;');
+    	}*/
+    	
+    	/*alert( JSON.stringify(dataList.imgUrl) );
+    	 var strImg = getImagePoster(dataList.imgUrl,'414x414');
+	    	dataList.imgUrl = strImg;
+    	var sdUrl =  dataList.url3D;
+    	var aUrl   = sdUrl.substr(sdUrl.indexOf('userfiles'));
+    	dataList.url3D = baseUrl+aUrl;*/
+    };
+    var exhibits=[];
+    /*初始化数据*/
+	function fnInitData(exhId){
+		  
+	}
+    /*下拉刷新*/
+  function fnInitPullRefresh() {
+            api.setRefreshHeaderInfo({
+                visible: true,
+                bgColor: '#fff',
+                textColor: '#ddd',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+    		   	fnInitData(exhId);
+                api.refreshHeaderLoadDone();
+                api.hideProgress();
+		       	api.parseTapmode();
+            });
+        };
+       /* 展开文字*/
+    var num = true;
+    function fnContentWen(){
+    	num = !num;
+    	var wen = $api.byId('contentWen');
+    	var button = $api.byId('button');
+    	/*$api.attr(button, 'value', '收起');*/
+    	if(num){
+    	//	alert(0)
+    		$api.attr(button, 'value', '更多展览介绍');	
+    		$api.addCls(wen, 'contentWens');
+    		}else{
+    			$api.attr(button, 'value', '收起');
+    			$api.removeCls(wen, 'contentWens');
+    		}
+    	}
+    	/*打开老房子*/
+    	function fnOpenLFZ(LFZUrl){
+    		//LFZUrl= 'https://www.baidu.com/'
+    		if(LFZUrl == undefined || LFZUrl == ''){
+    			api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+    		}else{
+    			api.openWin({
+		            name: 'url3D',
+		            url: LFZUrl,
+		            bgColor:'#fff',
+		            vScrollBarEnabled:false,
+		            hScrollBarEnabled:false,
+		        });
+    		}
+    	}
+    	/*打开打开全景展览*/
+    	function fnOpenQJZL(QJZLUrl){
+    		if(QJZLUrl == undefined || QJZLUrl == '' || QJZLUrl == 'undefined'){
+    			api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+    		}else{
+    			api.openWin({
+		            name: 'panoramaUrl',
+		            url: 'qj.html',
+		            bgColor:'#fff',
+		            vScrollBarEnabled:false,
+		            hScrollBarEnabled:false,
+		           pageParam:{
+		            	url:QJZLUrl
+		            	
+		            }
+		        });
+    		}	
+    	}
+    	/*打开展品详情页*/
+    	function fnOpenWinFrame(index,evt){
+    		var e = evt || window.event; 
+    		e.stopPropagation(); 
+    		window.event?e.cancelBubble=true:e.stopPropagation(); 
+    		/*alert(JSON.stringify(dataList))*/
+    		api.openWin({
+    		 name: 'jpxq_frame',
+            url: 'jpxq_frame.html',
+            bgColor:'#fff',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false,
+            pageParam:{
+            	data:arts[index]
+            }
+    	})
+    	}
+    	/*打开视频*/
+	function fnOpenVideo(data,evt){
+    	var e = evt || window.event; 
+		e.stopPropagation(); 
+		window.event?e.cancelBubble=true:e.stopPropagation(); 
+    	 api.openWin({
+            name: 'zlsp_list_frame',
+            url: 'zlsp_list_frame.html',
+            bgColor:'#fff',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false,
+            pageParam:{
+            	d:exhId
+            }
+        });
+			/*if(videoUrl == undefined){
+				api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+			}else{
+				api.openVideo({
+			    url: videoUrl
+				});
+			}*/
+	        
+    } 
+    function fnOpenWinList(data,evt){
+    	var e = evt || window.event; 
+		e.stopPropagation(); 
+		window.event?e.cancelBubble=true:e.stopPropagation(); 
+    	 api.openWin({
+            name: 'jp_list_frame',
+            url: 'jp_list_frame.html',
+            bgColor:'#fff',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false,
+            pageParam:{
+            	id:exhId,
+            	d:arts
+            }
+        });
+    }
+    function fnOpenWin(data,evt){
+      /*  alert(JSON.stringify(ww3d))*/
+    	var e = evt || window.event; 
+		e.stopPropagation(); 
+		window.event?e.cancelBubble=true:e.stopPropagation(); 
+    	 api.openWin({
+            name: 'zlcp_list_frame',
+            url: 'zlcp_list_frame.html',
+            bgColor:'#fff',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false,
+            pageParam:{
+            	id:exhId,
+            	d:List3d
+            }
+        });
+    }
+</script>
+</html>

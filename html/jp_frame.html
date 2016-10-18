@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<script type="text/javascript">
+		/*设置页面的文字部分*/
+			var html = document.documentElement;
+				function onWindowResize() {
+				    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+				}
+			window.addEventListener('resize', onWindowResize);
+			onWindowResize();
+	</script>
+	<style>
+        /*公共样式*/
+		html,body{height: 100%; width:100%;}
+		li{list-style: none;}
+		*{padding:0;margin:0;}
+		a{text-decoration: none;color:#999;}
+		.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+		.contents{width: 100%;}
+		.img_list{}
+		.list_box{width: 18.93rem;-webkit-box-align: center;-webkit-box-pack: center;display:-webkit-box;display:-moz-box; margin: 0 auto; border-bottom: 1px solid #DDDDDD;}
+		.list_box:first-child{border-top: 1px solid #DDDDDD;}
+		.list_box:last-child{border-bottom:none;}
+		.list_box .myImg:first-child{border-right: 1px solid #DDDDDD;}
+		.myImg{-webkit-box-flex: 2; padding-top:1rem;}
+		.myImg img{width: 5.86rem; height: 5.86rem; display: block; margin: 0 auto;}
+
+		.myImg p{text-align: center;width: 9.8rem; margin-top:0.53rem; padding-bottom:1rem;font-size: 0.69rem; color:#666666;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}	
+    </style>
+</head>
+<body>
+	<div class="contents">
+		<div class="img_list">
+			<!--图片列-->
+			<div class="list_box">
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('青铜器')" src="../img/qtq.png" alt="" />
+					<p>青铜器</p>
+				</div>
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('陶瓷器')" src="../img/tcq.png" alt="" />
+					<p>陶瓷器</p>
+				</div>
+			</div>
+			<div class="list_box">
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('书画')" src="../img/sh.png" alt="" />
+					<p>书画</p>
+				</div>
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('金银玉器')" src="../img/jylq.png" alt="" />
+					<p>金银玉器</p>
+				</div>
+			</div>
+			<div class="list_box">
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('文房四宝')" src="../img/wfsb.png" alt="" />
+					<p>文房四宝</p>
+				</div>
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('古代工艺')" src="../img/gdgy.png" alt="" />
+					<p>古代工艺</p>
+				</div>
+			</div>
+			<div class="list_box">
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('潘玉良作品')" src="../img/pylzp.png" alt="" />
+					<p>潘玉良作品</p>
+				</div>
+				<div class="myImg">
+					<img tapmode onclick="fnOpenWin('古生物化石')" src="../img/gswhs.png" alt="" />
+					<p>古生物化石</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+    apiready = function(){
+
+      //  fnInitPullRefresh();
+    };
+    var  list='list';
+       function fnInitPullRefresh() {
+            api.setRefreshHeaderInfo({
+                visible: true,
+               
+                bgColor: '#fff',
+                textColor: '#e1017e',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+                //fnLoadRemoteDB("ware", fields, where, 5, true, fnCheckShoppingCart);
+            });
+        };
+    function fnOpenWin(id){
+    	api.openWin({
+		    name: 'jp_list_frame',
+		    url: './jp_list_frame.html',
+		    bgColor:"#fff",
+		    pageParam: {
+		        name: id,
+		        list:list
+		    }
+		});
+    }
+</script>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<script type="text/javascript">
+		/*设置页面的文字部分*/
+			var html = document.documentElement;
+				function onWindowResize() {
+				    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+				}
+			window.addEventListener('resize', onWindowResize);
+			onWindowResize();
+	</script>
+	<style type="text/css">
+		/*公共样式*/
+			html,body{height: 100%; width:100%;}
+			li{list-style: none;}
+			*{padding:0;margin:0;}
+			a{text-decoration: none;color:#999;}
+			.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+			.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+		.contents{width: 18.93rem; margin: 0 auto;}
+		.container{
+			column-width:9.22rem;
+	        -webkit-column-width:9.22rem;
+	        -moz-column-width:9.22rem;
+	        -o-column-width:9.22rem;
+	        -webkit-column-gap:0.4rem;
+	        -moz-column-gap:0.4rem;
+	        -o-column-gap:0.4rem;
+  	   }
+  	 	.container div{ border:#CCC 1px solid; display:inline-block;width:9.1rem; height:6.2rem;position:relative; margin-top: 1.4rem;}
+	    .container img{max-width: 9.1rem; max-height: 6.2rem;border: 0px solid #fff; margin: auto auto;position: absolute;top: 0;left: 0;right: 0;bottom: 0;}
+	    .title{
+	    	display: block;width:9.22rem;
+	         line-height:1.5rem; font-size:0.69rem; color:#666;
+	         text-align:center;
+	         font-family:"Microsoft YaHei";
+	         position: absolute;
+	         top: 6.4rem;
+	    }
+    </style>
+</head>
+<body>
+	<div class="contents container wrap" id="contents" tapmode>	
+	</div>
+	<script id="template" type="text/template">
+		{{~ it:list}}
+         <div>
+        	 <img onclick="fnOpenSPXQ('{{=list.filePath}}')" class="myImg highlight-color" src="{{=list.videoImgUrl == null || list.videoImgUrl == ''?  '../img/spmr.png':list.videoImgUrl}}" alt="" title="" /> 
+        	 <span class="title">{{=list.fileDisplayName}}00</span>
+         </div>
+       {{~}}
+	</script>
+</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript" src="../script/globalData.js"></script>
+	<script type="text/javascript">
+	var exhId,da;
+    apiready = function(){
+    	exhId= api.pageParam.id;
+    	data = api.pageParam.d;
+    	fnInitPullRefresh();
+    	fnInitData(exhId);
+    };
+    function fnInitData(exhId){
+    	/*alert(exhId);*/
+    	api.showProgress({
+		    style: 'default',
+		    animationType: 'fade',
+		    title: '努力加载中...',
+		    /*text: '先喝杯茶...',*/
+		    modal: false
+		});
+    	api.hideProgress();
+    	var template = $api.byId('template');
+    	var dot = doT.template(template.innerHTML);
+    	/*alert(JSON.stringify(ret.result.recommendList))*/
+    	var dataList = data;
+		$api.byId("contents").innerHTML= dot(dataList.videos);
+	}
+function fnOpenSPXQ(videoUrl){
+		if(videoUrl == undefined){
+				api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+			}else{
+				api.openVideo({
+			    url: videoUrl
+				});
+			}
+	}
+
+     function fnInitPullRefresh() {
+            api.setRefreshHeaderInfo({
+                visible: true,
+                bgColor: '#fff',
+                textColor: '#ddd',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+                
+                api.showProgress({
+				    style: 'default',
+				    animationType: 'fade',
+				    title: '努力加载中...',
+				    /*text: '先喝杯茶...',*/
+				    modal: false
+				});
+        		  api.ajax({
+	                url: globalConfig.zlSpListUrl+'?'+'exhibitId'+'='+exhId,
+	                method: 'post',
+	                timeout:40,
+	                cache:true,
+	                data: {},
+	                files: { 
+	                      file: ''
+	                 },
+	                },function(ret, err){
+		                if (ret) {
+		                	api.hideProgress();
+		                	api.refreshHeaderLoadDone();
+		                } else {
+		                    //alert(JSON.stringify(err));
+		                     api.toast({
+							    msg: '加载失败',
+							    duration: 2000,
+							    location: 'bottom'
+							});
+		                    api.hideProgress();
+		                }
+		            })
+        		  api.parseTapmode();
+            });
+        };
+
+</script>
+</html>

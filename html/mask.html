@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <script type="text/javascript">
+	/*设置页面的文字部分*/
+		var html = document.documentElement;
+			function onWindowResize() {
+			    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+			}
+		window.addEventListener('resize', onWindowResize);
+		onWindowResize();
+	</script>
+    <link rel="stylesheet" type="text/css" href="api.css"/>
+    <style>
+       /*公共样式*/
+			html,body{height: 100%; width:100%;}
+			li{list-style: none;}
+			*{padding:0;margin:0;}
+			a{text-decoration: none;color:#999;}
+			.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+			.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+			.contents{width: 100%; height: 100%; background-image: url(../img/img_03.png); background-repeat: no-repeat;background-size: 100% 100%;position: relative;}
+			.contents #tiao{position: absolute;top: 8rem;left: 4.8rem; width: 9.6rem;animation:mymove 4s infinite initial alternate;-webkit-animation:mymove  4s infinite  alternate ;-webkit-animation-timing-function: initial; /* Safari 和 Chrome */}
+
+		@-webkit-keyframes mymove{
+			from{top: 8rem;}
+			to{top: 18rem;}
+		}
+		.acc{position: absolute;top: 21rem; left: 2.2rem;}
+		.acc li	{float: left; position: relative;width: 4rem;margin-left:2rem; height: 1.8rem; }
+		.acc li:first-child{margin-left:0rem; }
+		.acc li	img{max-width: 1.44rem;max-height: 1.44rem;display: block;margin: 0 auto;}
+		.acc li:nth-child(2) img{width: 1.2rem; height: 1.2rem;} 
+		.acc li	p{color:#77746e;position: absolute; width:3rem;font-size: 0.64rem;width: 4rem; text-align: center; line-height: 1rem;margin-top: 0.5rem;}
+		#finds{position: absolute;left: 14rem;top: 9rem; display: none;width: 1.4rem; height: 1.4rem;text-align: center;}	
+     		
+    </style>
+</head>
+<body>
+<div class="contents" id='contents'>
+	 <img id='tiao' src="../img/t_03.png" alt="">
+	 <input id="sckey" type="text" style="width:12rem;border: none; left:4rem; position: absolute;top: 8.53rem; height: 2.13rem; display: none;">
+	<img id="finds" src="../img/su_03.png" alt="" tapmode onclick="fnOpenWind()">
+	 <div class='acc'>
+	 	<li   onclick="fnChangeNav(1)"><img id='wbk' src="../img/zpss_03.png" alt=""><p>展品搜索</p></li>
+	 	<li tapmode onclick="fnChangeNav(2)"> <img id='ewm' src="../img/ewm_05.png" alt=""><p>二维码</p></li>
+	 	<li> <img src="../img/ytst.png" alt=""><p>以图搜图</p></li>
+	 </div>
+</div>
+   
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+var ewm = $api.byId('ewm');
+var wbk = $api.byId('wbk')
+    apiready = function(){
+         api.addEventListener({
+			    name: 'myEventUpdataWin'
+			}, function(ret){
+     			$api.css(inputs,'display:none');
+	    		$api.css(imgs,'display:block');
+	    		$api.css(finds,'display:none');
+	    			api.sendEvent({
+					    name: 'myEventCurmea',
+						});
+			});
+        
+         $api.attr(ewm, 'src', '../img/ewmxz_03.png');
+        
+    };
+    /*设置点击按钮状态*/
+    var imgs,inputs,finds,content;
+    function fnChangeNav(index){
+
+    	content = $api.byId('contents');
+    	if(index == 1){
+			
+    		api.sendEvent({
+		    	name: 'myEventText',
+			});
+			$api.attr(wbk, 'src', '../img/zpssxz.png');
+			$api.attr(ewm, 'src', '../img/ewm_05.png');
+			$api.css(content,"background-image: url(../img/wbbg_03.png); background-repeat: no-repeat;background-size: 100% 100%;");
+			finds = $api.byId('finds');
+			$api.css(finds,'display:block');
+	    	imgs = $api.byId('tiao');
+	    	$api.css(imgs,'display:none');
+	    	inputs = $api.byId('sckey');
+	    	$api.css(inputs,'display:block');
+	    	document.getElementById('sckey').focus();
+
+    	}else{
+    		api.sendEvent({
+		    name: 'myEventCurmea',
+			});
+		
+			$api.attr(ewm, 'src', '../img/ewmxz_03.png');
+			$api.attr(wbk, 'src', '../img/zpss_03.png');
+			$api.css(content,"background-image: url(../img/img_03.png); background-repeat: no-repeat;background-size: 100% 100%;");
+			
+	    	$api.css(inputs,'display:none');
+    		$api.css(imgs,'display:block');
+    		$api.css(finds,'display:none');
+    	}
+    	
+    }
+    function fnOpenWind(){
+    	//var serkey = $api.byId('inp');
+    	//alert(serkey)
+    	var key =$api.val(inputs);
+    	//alert(key)
+    	 api.openWin({
+            name: 'ss_zlcp_list',
+            url: 'ss_zlcp_list.html',
+            bgColor:'#fff',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false,
+            pageParam:{
+            	searchKey:key
+            }
+        });
+    }
+</script>
+</html>

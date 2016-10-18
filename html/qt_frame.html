@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <script type="text/javascript">
+        /*设置页面的文字部分*/
+            var html = document.documentElement;
+                function onWindowResize() {
+                    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+                }
+            window.addEventListener('resize', onWindowResize);
+            onWindowResize();
+    </script>
+    <style>
+       /*公共样式*/
+            html,body{height: 100%; width:100%;}
+            li{list-style: none;}
+            *{padding:0;margin:0;}
+            a{text-decoration: none;color:#999;}
+            .clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+            .highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+        /*公共样式结束*/ 
+        .img_box{width: 18.93rem;-webkit-box-align: center;margin: 0 auto;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+        .img_box img{-webkit-box-flex: 1;width: 100%;display: block;}   
+        .list_box div{height: 2.93rem;border-bottom: 1px solid #ddd;}
+        .list_box div:last-child{border-bottom:none;}
+        .list_box div ul{width: 18.93rem; margin: 0 auto; }     
+        .list_box div ul li{display:block;float: left;color:#666666;font-size: 0.85rem;position: relative;}     
+        .list_box div ul li:nth-child(2){margin-left: 1rem;line-height: 2.93333rem;}        
+        .list_box div ul li:last-child{margin-right: 0;float: right;}       
+        .list_box div ul li img{max-height: 0.8rem;max-width: 0.8rem;padding-top:1.1rem;}
+        .act{opacity: 0.6;background-color: #ddd;}        
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="img_box">
+            <img src="../img/qtbg_02.png" alt="" />
+        </div>
+        <div class="list_box clearfix" >
+            <div class="js clearfix" tapmode='act' onclick="openFun(0)">
+                <ul class="clearfix">
+                    <li>
+                        <img src="../img/js_05.png" alt="" />
+                    </li>
+                    <li>安博介绍</li>
+                    <li>
+                        <img src="../img/jt_03.png" alt="" />
+                    </li>
+                </ul>
+            </div>
+            <div class="zn clearfix"  tapmode='act' onclick="openFun(1)" >
+                <ul class="clearfix">
+                    <li>
+                        <img src="../img/cgzn_05.png" alt="" />
+                    </li>
+                    <li>参观指南</li>
+                    <li>
+                        <img src="../img/jt_03.png" alt="" />
+                    </li>
+                </ul>
+            </div>
+            <div class="jtlx clearfix" tapmode='act' onclick="openFun(2)">
+                <ul class="clearfix">
+                    <li>
+                        <img src="../img/jtlx_05.png" alt="" />
+                    </li>
+                    <li>交通路线</li>
+                    <li>
+                        <img src="../img/jt_03.png" alt="" />
+                    </li>
+                </ul>
+            </div>
+            <div class="grsc clearfix"  tapmode='act' onclick="openFun(3)">
+
+                <ul class="clearfix">
+                    <li>
+                        <img src="../img/grzx_03.png" alt="" />
+                    </li>
+                    <li>个人收藏</li>
+                    <li>
+                        <img src="../img/jt_03.png" alt="" />
+                    </li>
+                </ul>
+            </div>
+            <div class="grsc clearfix" tapmode='act' onclick="openFun(4)">
+                <ul class="clearfix">
+                    <li>
+                        <img src="../img/gywm_03.png" alt="" />
+                    </li>
+                    <li>关于我们</li>
+                    <li>
+                        <img src="../img/jt_03.png" alt="" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+    apiready = function(){
+        //fnInitPullRefresh();
+    };
+   
+    function fnInitPullRefresh() {
+            api.setRefreshHeaderInfo({
+                visible: true,
+               
+                bgColor: '#fff',
+                textColor: '#e1017e',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+                //fnLoadRemoteDB("ware", fields, where, 5, true, fnCheckShoppingCart);
+            });
+        };
+
+    function fnOpenWin(name){
+       // alert(name)
+        api.openWin({
+            name: name,
+            url: './'+name+'.html',
+            vScrollBarEnabled:false,
+            hScrollBarEnabled:false
+           /* pageParam: {
+                name: 'test'
+            }*/
+        });
+    }
+ 
+    function openFun(index){
+       // alert(index)
+        switch(index){
+                case 0 :
+                       
+                    fnOpenWin('abjs');
+                break;
+                   
+                case 1 :
+                    
+                    fnOpenWin('cgzn');
+                   
+                break;
+                case 2 :
+                    
+                     fnOpenWin('jtlx');
+                break;
+                case 3 :
+
+                    fnOpenWin('grsc');
+                break;
+                case 4 :
+                     fnOpenWin('aboutHeader');
+                break;
+        }
+    }
+</script>
+</html>

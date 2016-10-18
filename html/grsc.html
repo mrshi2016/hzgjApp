@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>个人收藏</title>
+	<script type="text/javascript">
+		/*设置页面的文字部分*/
+			var html = document.documentElement;
+				function onWindowResize() {
+				    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+				}
+			window.addEventListener('resize', onWindowResize);
+			onWindowResize();
+		</script>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<style type="text/css">
+			/*公共样式*/
+			html,body{height: 100%; width:100%;}
+			li{list-style: none;}
+			*{padding:0;margin:0;}
+			a{text-decoration: none;color:#999;}
+			.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+			.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+			.main{width: 100%;}	
+			.header{width: 100%; height:2.34rem;position:fixed;top: 0;background: #F9F9F9;z-index: 999; border-bottom: 1px solid #DDDDDD;}
+		
+			.header img{max-width: 0.66rem; z-index:998;margin-left: 0.53rem;margin-top:0.64rem;float:left;}
+			.header p{float: left;width: 18.93rem; left:8.13rem; position: absolute;line-height:2.34rem;font-size: 0.96rem; color:#333;}
+
+			.close{width: 2rem;float:left; height: 2.34rem}
+		</style>
+</head>
+<body>
+	<section class="main">
+		<div class="header clearfix" id="header">
+			<div class="clearfix close" tapmode onclick="api.closeWin()">
+				<img  src="../img/fh_03.png" alt="" />
+			</div>
+			<p>个人收藏</p>
+		</div>
+
+	</section>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+	var header;
+		 apiready = function(){
+    	// 设置ios7的标题栏字体变亮，全局用一个就行了
+    		//fnInitPullRefresh();
+    		header = $api.byId('header');
+    		headerHeight = $api.offset(header).h;
+    		fnInitFrame()
+   		 };
+		function fnInitFrame(){
+		//alert(headerHeight)
+			api.openFrame({
+			    name: 'grsc_content_frame',
+			    url: './grsc_content_frame.html',
+			    rect: {
+			        x: 0,
+			        y: headerHeight,
+			        w: 'auto',
+			        h: api.frameHeight - headerHeight
+			    },
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			    vScrollBarEnabled: false,
+			    hScrollBarEnabled: false
+			});
+		}
+
+	</script>
+</body>
+</body>
+</html>

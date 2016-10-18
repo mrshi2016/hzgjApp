@@ -1,0 +1,717 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>Hello APP</title>
+	<link rel="stylesheet" type="text/css" href="./css/api.css" />
+	<script type="text/javascript">
+        /*设置页面的文字部分*/
+            var html = document.documentElement;
+                function onWindowResize() {
+                    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+                }
+            window.addEventListener('resize', onWindowResize);
+            onWindowResize();
+        </script>
+	<style>
+    	.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+		  .footer ul {width:100%; height:2.6rem;border-top:1px solid #ddd; position:fixed; bottom:0; background: #f9f9f9;-webkit-box-align: center; margin-top:0.3rem;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+            .footer ul li{-webkit-box-flex: 5; text-align: center;}
+            .bottom_btn{width:1.6rem; height:2rem; margin:0 auto; margin-top:0.46rem;background-repeat: no-repeat; background-size: 100% 100%;font-size: 0.58rem;}	
+    	.wxbtn {
+    		background-image: url(./img/zxwxz_03.png) ;
+    		background-size: 1.3rem 1.1rem; 
+                    padding-top: 1.3rem;
+                    background-position-x: center;
+    	}
+    	.txbtn {
+    		background-image: url(./img/jp_03.png);
+    		background-size: 1.3rem 1.1rem; 
+                    padding-top: 1.3rem;
+                    background-position-x: center;
+    	}
+    	.fxbtn {
+    		background-image: url(./img/dl_03.png);
+    		background-size: 1.3rem 1.1rem; 
+                    padding-top: 1.3rem;
+                    background-position-x: center;
+    	}
+    	.mebtn {
+    		background-image: url(./img/su_03.png);
+    		background-size: 1.3rem 1.1rem; 
+                    padding-top: 1.3rem;
+                    background-position-x: center;
+    	}
+    	.mebtns {
+    		background-image: url(./img/qt_03.png);
+    		background-size: 1.3rem 1.1rem; 
+            padding-top: 1.3rem;
+            background-position-x: center;
+    	}
+    	.activebtn0 {
+    		background-image: url(./img/botton.png);
+    		background-size: 1.3rem 1.1rem; 
+            padding-top: 1.3rem;
+            background-position-x: center;
+    	}
+    	.activebtn1 {
+    		background-image: url(./img/jpxz_03.png);
+    		background-size: 1.3rem 1.1rem; 
+            padding-top: 1.3rem;
+            background-position-x: center;
+    	}
+    	.activebtn2 {
+    		background-image: url(./img/daolan_03.png);
+    		background-size: 1.3rem 1.1rem; 
+            padding-top: 1.3rem;
+            background-position-x: center;
+    	}
+    	.activebtn3 {
+    		background-image: url(./img/fdj_03.png);
+    		background-size: 1.3rem 1.1rem; 
+            padding-top: 1.3rem;
+            background-position-x: center;
+    	}
+    	.activebtn4 {
+    		background-image: url(./img/qtxz_03.png);
+    		background-size: 1.3rem 1.1rem; 
+            padding-top: 1.3rem;
+            background-position-x: center;
+    	}
+    	.activebtn {
+    		color:#87b6f6;
+    		
+    	}
+		.bar_item_hover {
+			background: #000;
+		}
+
+		.topbar {background: #EBECF0; height:50px; border-bottom: 1px solid #DDDFE3;}
+		.btn_click {background: #DADDE0;}
+		.topbar_title {display: inline-block;font-size: 20px; line-height: 50px;padding-left: 12px;}
+		.scrollbar {display: -webkit-box;/*必不可少*/ display: -webkit-flex; text-align: center; height: 40px; line-height: 40px;background: #EBECF0;font-size: 12px;position: relative;}
+		.flex1 {-webkit-box-flex:1;-webkit-flex: 1;flex:1;color: #909090;}
+		.indexbar {position: absolute;/*background: #0fc;*/width: 50%;height: 5px;left: 0px;bottom: 0px;-webkit-transition: 300ms;}
+		.redbox {background: #DB4646;width: 40px;height: 5px;position: relative;left: auto;right: auto; margin-left: auto; margin-right: auto;}
+
+		/*推荐头部*/
+		.zxHeader{width: 100%;position:fixed; top:0; background-color: #f9f9f9; border-top:1px solid #ddd;z-index: 999;}
+        .zxHeader ul{-webkit-box-align: center;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+        .zxHeader ul li{height:1.6rem;font-size: 0.69rem;-webkit-box-flex: 4;text-align: center; color: #999; line-height: 1.6rem;}
+		.right_btn{float: right;padding: 11px 15px 11px 15px;}
+		#logo {padding: 11px 0 0 10px;height: 28px;}
+		#topbar_profile {height: 28px;}
+		#topbar_search {height: 28px;}
+		.btn_click {background: #DADDE0;} 
+		
+		.titlebar {display: none;}
+		.activebar {display: block;}
+		.bottomhover {opacity: 0.7;}
+		/* 热点头部 */
+		.jpHeader{width: 100%;position:fixed; top:0; background: #f9f9f9; border-top:1px solid #ddd;z-index: 999;}
+		
+		.jpHeader p{text-align: center;border-bottom:1px solid #ddd;line-height: 2.34rem;color: #333333;}
+		
+		.qtHeader{width: 100%;position:fixed; top:0; background: #f9f9f9; border-top:1px solid #ddd;z-index: 999;}
+		.qtHeader p{text-align: center;border-bottom:1px solid #ddd;line-height: 2.34rem;color: #333333;}		
+		.selected{color: #333 !important;}
+		/* 本地刷新图标 */
+		#localrefresh {display:none;float: right; width: 40px; padding: 5px 10px;}
+		#jpTitle {position: relative;}
+		#dlTitle img{position: absolute; top:0.5rem; right: 1rem; float: right; width: 1.28rem; height: 1.28rem;}
+		.dlHeader{width: 100%;position:fixed; top:0; background: #f9f9f9; border-top:1px solid #ddd;z-index: 999;}
+		.dlHeader p{text-align: center;border-bottom:1px solid #ddd;line-height: 2.34rem;color: #333333;}
+
+		/* 搜索头部 */
+		.ssHeader{width: 100%;position:fixed; top:0; background: #f9f9f9; border-top:1px solid #ddd;z-index: 999;}
+		
+		.ssHeader p{text-align: center;border-bottom:1px solid #ddd;line-height: 2.34rem;color: #333333;}
+    </style>
+</head>
+<body>
+	<div id="wrap">
+		<!-- 推荐头部 -->
+		<div id="zxTitle" class="titlebar activebar zxHeader">
+			<ul class="highlight-color">
+				<li class="tabMenu selected" tapmode="active" onclick="fnChangeNav(0)">推荐展览</li>
+				<li class="tabMenu" tapmode="active" onclick="fnChangeNav(1)">正在展览</li>
+				<li class="tabMenu" tapmode="active" onclick="fnChangeNav(2)">即将开展</li>
+				<li class="tabMenu" tapmode="active" onclick="fnChangeNav(3)">历史回顾</li>
+			</ul>
+		</div>
+		<!-- 精品头部 -->
+		<div id="jpTitle" class="titlebar jpHeader clearfix">
+			<p>精品</p>
+		</div>
+		<!-- 导览头部 -->
+		<div id="dlTitle" class="titlebar dlHeader clearfix">
+			<p>导览</p>
+			<img onclick="fnFunaaa()" id='dlBtn' src="img/ggss.png" alt="">
+		</div>
+		<!-- 搜索 -->
+		<div id="ssTitle" class="titlebar ssHeader clearfix">
+			<p>搜索</p>
+		</div>
+		<!-- 其他 -->
+		<div id="qtTitle" class="titlebar qtHeader clearfix">
+			<p>其他</p>
+		</div>
+
+		<div id="main"></div>
+		<!-- 底部导航 -->
+		<div  class="footer clearfix">
+			<ul id="footer">
+				<li tapmode="bottomhover" onclick="switchframe('zx')">
+					<a class="bottom_btn wxbtn weixin activebtn activebtn0">展讯</a>
+				</li>
+
+				<li tapmode="bottomhover" onclick="switchframe('jp')">
+					<a class="bottom_btn txbtn communicate">精品</a>
+				</li>
+
+				<li tapmode="bottomhover" onclick="switchframe('dl')">
+					<a class="bottom_btn fxbtn discover">导览</a>
+				</li>
+
+				<li tapmode="bottomhover" onclick="switchframe('ss')">
+					<a class="bottom_btn mebtn home">搜索</a>
+				</li>
+				<li tapmode="bottomhover" onclick="switchframe('qt')">
+					<a class="bottom_btn mebtns home">其他</a>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</body>
+	<script type="text/javascript" src="./script/api.js"></script>
+	<script type="text/javascript" src="./script/globalData.js"></script>
+    <script type="text/javascript" src="./script/localdb.js"></script>
+
+
+	<script type="text/javascript">
+
+	var camClose=true;
+
+	 var FNScanner;
+	/*获取展讯头部*/
+	var zxheader = $api.byId('zxTitle');
+	/*获取精品头部*/
+	var jpheader = $api.byId('jpTitle');
+	/*获取精品头部*/
+	var dlheader = $api.byId('dlTitle');
+	/*获取精品头部*/
+	var ssheader = $api.byId('ssTitle');
+	/*获取其他头部*/
+	var qtheader = $api.byId('qtTitle');
+	var warehouseheader = $api.byId('warehouseTitle');
+	var offlineheader = $api.byId('offlineTitle');
+    var zxheader = $api.offset(zxheader);
+    var main = $api.byId('main');
+    var mainPos = $api.offset(main);
+
+	var footer = $api.byId('footer');
+	var footerPos = $api.offset(footer);
+	// 随意切换按钮
+	/*
+	name:按钮的名字
+	index:索引   
+	*/
+	function randomSwitchBtn(name, index)
+	{
+
+		var lis = $api.domAll('.bottom_btn');
+		var i = 0, len = lis.length;
+		/*当前选中的按钮*/
+		var curLi = lis[index];
+		
+		// api.alert({msg:len});
+		for(i; i<len; i++){
+
+			var thisLi = lis[i];
+			if(thisLi === curLi){
+				$api.addCls(thisLi,'activebtn');
+				$api.addCls(thisLi,'activebtn'+index);
+				continue;
+			}else{
+				if($api.hasCls(thisLi,'activebtn')){
+					$api.removeCls(thisLi,'activebtn');
+					$api.removeCls(thisLi,'activebtn'+i);
+				}
+			}
+		}
+
+		// 切换头部
+		var lis = $api.domAll('.titlebar');
+		var i = 0, len = lis.length;
+		/*选中的头部*/
+		var curLi = lis[index];
+		// api.alert({msg:len});
+		for(i; i<len; i++){
+			var thisLi = lis[i];
+			if(thisLi === curLi){
+				$api.addCls(thisLi,'activebar');
+				$api.addCls(thisLi,'activebar'+index);
+				continue;
+			}else{
+				if($api.hasCls(thisLi,'activebar')){
+					$api.removeCls(thisLi,'activebar');
+					$api.removeCls(thisLi,'activebar'+i);
+				}
+			}
+		}
+	}
+
+	// 隐藏所有的一级frame
+	function hideAllFrame()
+	{
+		api.setFrameAttr({
+		    name: 'ssHeader',
+		    hidden:true
+		});
+		api.setFrameAttr({
+		    name: 'ss_frame',
+		    hidden:true
+		});
+		api.setFrameAttr({
+		    name: 'zxHeader',
+		    hidden:true
+		});
+		api.setFrameAttr({
+		    name: 'jp_frame',
+		    hidden:true
+		});
+		api.setFrameAttr({
+		    name: 'dlHeader',
+		    hidden:true
+		});
+		api.setFrameAttr({
+		    name: 'qt_frame',
+		    hidden:true
+		});
+		api.setFrameAttr({
+		    name: 'dl_frame',
+		    hidden:true
+		});
+		api.setFrameGroupAttr({
+		    name: 'zx_group',
+		    hidden:true
+		});
+		api.setFrameGroupAttr({
+		    name: 'ss',
+		    hidden:true
+		});
+
+		/*api.setFrameGroupAttr({
+		   
+		});*/
+	}
+
+	// 自己修复ios显示frame的时候bug
+	// ios自己主动隐藏后，再open就不显示了
+	function showgroup(type)
+	{
+		api.setFrameGroupAttr({
+		    name: type + 'group',
+		    hidden:false
+		});
+	}
+
+	// 展示指定的frame
+	function showframe(type)
+	{
+		api.setFrameAttr({
+		    name: type,
+		    hidden:false
+		});
+	}
+	var  gongongsheshi;
+	// 打开制定的frame
+	function openframeinstance( frame, marginTop)
+	{
+		api.openFrame ({
+	        name: frame,
+	        url: './html/'+frame+'.html',
+	        rect:{
+	            x:0,
+	            y:marginTop,
+	            w:'auto',
+	            h:'auto',
+
+			    marginBottom:footerPos.h,    //相对父window下外边距的距离
+
+			    
+	        },
+	        pageParam: {name: 'test',height:marginTop,gongong:gongongsheshi},
+	        bounces: true,
+	        opaque: false,
+	        bgColor: 'rgba(70 , 70, 70,0)',
+	        vScrollBarEnabled:false,
+	        hScrollBarEnabled:false
+	    });
+
+	}
+
+	//  打开hotgroup
+	var jpheaderPos;
+	var frames=[];
+	/*请求数据*/
+function openZxGroupInstance()
+{
+	Crameobj = api.require('scanner');
+	api.showProgress({
+	    style: 'default',
+	    animationType: 'fade',
+	    title: '努力加载中...',
+	    /*text: '先喝杯茶...',*/
+	    modal: false
+	});
+  /*api.ajax({
+        url: globalConfig.zlListUrl+'&menuId=1',
+        method: 'post',
+        timeout:40,
+        cache:true,
+        data: {},
+        files: { 
+              file: ''
+         }
+        },function(ret, err){
+            if (ret) {
+            	api.hideProgress();
+                //alert(JSON.stringify(ret));
+                fnOpenGroupWithData(ret);
+            } else {
+                alert(JSON.stringify(err));
+               api.toast({
+				    msg: '加载失败',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+               api.hideProgress();
+            }
+        });*/
+
+        fnOpenGroupWithData();
+}
+	/*打开展讯framegroup*/
+function fnOpenGroupWithData(data){
+ /*alert(JSON.stringify(data));*/
+	/*循环出展讯的四个tab页面*/
+
+
+	for (var i = 0; i <4; i++) {
+            frames.push({
+                name: "show_frame_" + i,
+                url: "./html/show_frame.html",
+                vScrollBarEnabled: false,
+                bounces: true,
+                  pageParam:{
+                  	type:i
+             }
+         });
+     }
+	jpheaderPos = $api.offset(jpheader);
+	
+	/*新开group*/	
+	api.openFrameGroup ({
+		name: 'zx_group',
+		background:'#FFFFFF',
+		scrollEnabled: true,
+		preload:1,
+		rect:{
+			x:0, 
+			y:zxheader.h, 
+			w:'auto', 
+			h:'auto',
+			marginBottom:footerPos.h,    //相对父window下外边距的距离
+		},
+		index:0,
+		frames:frames},
+		function(ret, err){
+			//var name = ret.name;
+			//alert( JSON.stringify( ret ) );
+			fnChangeNav(ret.index,true)
+			//switchhotindex(index);
+	});
+}
+	var navs;
+	var changing = false;
+		/*展讯里面tab切换
+		  响应展讯头部的按钮点击以及样式切换
+		*/
+        function fnChangeNav(index, noNeedChange) {
+            if (changing) {
+                return;
+            }
+            
+            changing = true;
+            setTimeout(function() {
+                changing = false;
+            }, 150);
+
+            for (var i = 0; i < navs.length; i++) {
+                if (i == index) {
+                    $api.addCls(navs[i], 'selected');
+                    if (!noNeedChange) {
+                        api.setFrameGroupIndex({
+                            name: 'zx_group',
+                            index: i,
+                            scroll: true
+                        });
+                    }
+                } else {
+                    $api.removeCls(navs[i], 'selected');
+                }
+            }
+        };
+	
+	// ===================================
+	// 响应底部按钮的切换frame
+	// ===================================
+	function switchframe(type)
+	{
+		switch(type)
+		{
+			case 'zx':
+				randomSwitchBtn('zxHeader', 0);
+				hideAllFrame();
+				openZxGroupInstance();
+				showgroup('zx_');
+				fnAganUpData();
+				//关闭二维码摄像头
+				fnCloseCam();
+
+			break;
+			case 'jp':
+				randomSwitchBtn('jp', 1);
+				hideAllFrame();
+				openframeinstance('jp_frame', $api.offset(jpheader).h);
+				showframe('jp_frame');
+				fnCloseCam();
+			break;
+			case 'dl':
+				randomSwitchBtn('dl', 2);
+				hideAllFrame();
+				openframeinstance('dl_frame',$api.offset(dlheader).h);
+				showframe('dl_frame');
+				fnCloseCam();
+			break;
+			case 'ss':
+				
+				randomSwitchBtn('ss', 3);
+				hideAllFrame();
+				FNfind($api.offset(ssheader).h);
+			//	openframeinstance('ss_frame',$api.offset(ssheader).h);
+				showgroup('offline');	
+			break;
+			case 'qt':
+				randomSwitchBtn('qt', 4);
+				hideAllFrame();
+				openframeinstance('qt_frame', $api.offset(qtheader).h);
+				fnCloseCam();
+				//showgroup('offline');
+			break;
+			default:
+				break;
+		}
+
+	}
+	/*搜索页面更新*/
+	var Crameobj;
+	var index =0;
+	function FNfind(marginTop){
+		index ++;
+		 api.openFrame ({        
+                    name: 'mask',        
+                    url: 'html/mask.html',        
+                    rect:{        
+                        x:0,        
+                        y:marginTop,        
+                        w:'auto',        
+                        h:'auto',
+                         //相对父window上外边距的距离
+						marginBottom:footerPos.h //相对父window下外边距的距离
+                    },
+                    vScrollBarEnabled:false,
+                    hScrollBarEnabled:false,
+                    scaleEnabled:false,
+                    bounces: false,        
+                    delay:200
+              });
+		   api.openFrame ({        
+                    name: 'smewmFrame',        
+                    url: 'html/smewmFrame.html',        
+                    rect:{        
+                        x:0,        
+                        y:marginTop,        
+                        w:'auto',        
+                        h:'auto',
+						marginBottom:footerPos.h   //相对父window下外边距的距离
+                    },
+                    bounces: false,        
+                    delay:200
+              });
+        api.bringFrameToFront({
+            from: 'mask'
+        });
+        /*判断如果在摄像头打开的状态下 并且不是第一次打开*/
+        if(index > 1 && camClose == true){
+
+        }else{
+        	   var aaaa =  function(){
+     			 updataGrame(marginTop);
+    		 }
+      		 setTimeout( aaaa, 400);
+        }
+	}
+	/*开启摄像头*/
+	function  updataGrame(marginTop){
+	camClose=false;
+      Crameobj.openView({
+          x:0,
+          y:0,
+          w:api.frameWidth,
+          h:api.frameHeight - marginTop - footerPos.h,
+          fixedOn:'smewmFrame',
+      },function(ret,err){
+          if (ret.msg == null){
+                
+              }else{
+               // alert(ret.msg);
+              var str=ret.msg;
+               var arr = str.split('/');
+               var artid = arr[arr.length-1];
+                   api.openWin({
+                          name: 'jpxq_frame',
+                          url: 'html/jpxq_frame.html',
+                          bgColor:'#fff',
+                          vScrollBarEnabled:false,
+                          hScrollBarEnabled:false,
+                          pageParam:{
+                            id:artid,
+                            list:'ewm'
+
+                          }
+                    });
+              }
+      });
+	}
+	function fnAganUpData(){
+			api.ajax({
+			        url: globalConfig.zlListUrl,
+			        method: 'post',
+			        timeout:40,
+			        cache:true,
+			        data: {},
+			        files: { 
+			              file: ''
+			         }
+			        },function(ret, err){
+			            if (ret) {
+			            	api.hideProgress();
+			            } else {
+			               // alert(JSON.stringify(err));
+			               api.toast({
+							    msg: '加载失败',
+							    duration: 2000,
+							    location: 'bottom'
+							});
+			               api.hideProgress();
+			            }
+			        });
+
+	}
+	// 完成首页初始化
+    apiready = function(){
+    	// 设置ios7的标题栏字体变亮，全局用一个就行了
+    	/*设置摄像头*/
+		var header = $api.domAll('.titlebar');
+		$api.fixIos7Bar(header);
+
+    	api.setStatusBarStyle({
+		    style: 'light'
+		});
+		var main = $api.byId('main');
+        var mainPos = $api.offset(main);
+		var footer = $api.byId('footer');
+		var footerPos = $api.offset(footer);
+		openZxGroupInstance()
+		navs = $api.domAll('.tabMenu');
+
+		fnInitDatabase(function(ret,err){
+			if(ret.status==true)
+				fnCreateTable(function(r,e){
+				});
+			else 
+				alert(err.msg);
+		});
+	/*监听事件判断导览页面按钮改变状态*/
+    api.addEventListener({
+		    name: 'myEvent'
+		}, function(ret){
+        	if(ret.value.key == 'false'){
+				 var btn = $api.byId('dlBtn');
+				$api.attr(btn, 'src', 'img/ggss.png');
+		   	}
+		});
+     api.addEventListener({
+			    name: 'myEventText'
+			}, function(ret){
+	        	Crameobj.closeView();
+	        	camClose=true;
+			});
+     api.addEventListener({
+		    name: 'myEventCurmea'
+		}, function(ret){
+ 			updataGrame($api.offset(ssheader).h);
+		});
+    };
+    var bol = false;
+    var btn = $api.byId('dlBtn');
+
+   function fnFunaaa(){
+   	if(bol == false){
+		var jsfun = 'fnCreatArea(false);';
+		api.execScript({
+		    frameName: 'dl_frame',
+		    script: jsfun
+		});
+		bol =true;
+		$api.attr(btn, 'src', 'img/ggssxz.png');
+   	}else{
+   		var jsfun = 'fnCreatArea(true);';
+		api.execScript({
+		    frameName: 'dl_frame',
+		    script: jsfun
+		});
+		bol =false;
+		$api.attr(btn, 'src', 'img/ggss.png');
+   	}
+   
+   }
+	/*关闭摄像头*/
+	function fnCloseCam(){
+		if(camClose==false){
+			Crameobj.closeView();
+			api.setFrameAttr({
+		    name: 'mask',
+		    hidden:true
+			});
+			api.setFrameAttr({
+			    name: 'smewmFrame',
+			    hidden:true
+			});
+		}else{
+			api.setFrameAttr({
+		    name: 'mask',
+		    hidden:true
+			});
+			api.setFrameAttr({
+			    name: 'smewmFrame',
+			    hidden:true
+			});
+		}
+	}
+
+</script></html>

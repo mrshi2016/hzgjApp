@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="A6915721102183" version="0.0.1">
+  <name>安徽古建</name>
+  <description></description>
+  <author email="guluring@163.com" href="guluring@163.com">guluring</author>
+  <content src="index.html"/>
+  <preference name="pageBounce" value="false"/>
+  <preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+  <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+  <preference name="hScrollBarEnabled" value="true"/>
+  <preference name="vScrollBarEnabled" value="true"/>
+  <preference name="autoLaunch" value="true"/>
+  <preference name="fullScreen" value="false"/>
+  <preference name="autoUpdate" value="true"/>
+  <preference name="smartUpdate" value="false"/>
+  <preference name="debug" value="false"/>
+  <preference name="iOS7StatusBarAppearance" value="false"/>
+  <preference name="StatusBarAppearance" value="false"/>
+  <preference name="backgroundMode" value="audio | location"/>
+  <permission name="readPhoneState"/>
+  <permission name="call"/>
+  <permission name="sms"/>
+  <permission name="camera"/>
+  <permission name="record"/>
+  <permission name="location"/>
+  <permission name="fileSystem"/>
+  <permission name="internet"/>
+  <permission name="bootCompleted"/>
+  <permission name="hardware"/>
+  <permission name="contact"/>
+  <access origin="*"/>
+   <feature name="wx">
+      <param name="urlScheme" value="wx8cdbc6065887e19e"/>
+      <param name="apiKey" value="wx8cdbc6065887e19e"/>
+      <param name="apiSecret" value="0c59a75e5c4ca06fe576f0180f3a7c34"/> 
+  </feature>
+  <feature name="webBrowser"></feature>
+</widget>

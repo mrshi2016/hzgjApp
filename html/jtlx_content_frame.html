@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="api.css"/>
+	<script type="text/javascript">
+		/*设置页面的文字部分*/
+			var html = document.documentElement;
+				function onWindowResize() {
+				    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+				}
+			window.addEventListener('resize', onWindowResize);
+			onWindowResize();
+	</script>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<style type="text/css">
+			/*公共样式*/
+			html,body{height: 100%; width:100%;}
+			li{list-style: none;}
+			*{padding:0;margin:0;}
+			a{text-decoration: none;color:#999;}
+			.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+			.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+       .contents{width: 100%;}
+			.bg_box{background: #F9F9F9;}
+			.contents .content_img{-webkit-box-align: center;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+			.contents .content_img img{-webkit-box-flex: 1;width: 18.93rem;}
+			.jsImg{margin:1rem;}
+			.jsImg .content_img img{width: 100%;}
+			.wen{ width: 18.93rem;margin: 0 auto;}
+			.wen .bt{ margin-top:0.5rem !important;font-weight: bold; margin-left: 0 !important;font-size: 0.8rem;}
+			.wen p{color: #333333;margin-top:0.42rem;margin-left: 2.13rem;font-size: 0.74rem;line-height: 1.2rem;}
+    </style>
+</head>
+<body>
+	<div class="contents">
+		<div class="bg_box">
+			<div class="content_img">
+				<img src="../img/dt_03.png"/>
+			</div>
+		</div>
+		<div class="wen">
+			<p class="bt">新馆:</p>
+			<p>乘13路到祁怀路口下，向南直行500米到安徽博物院。</p>
+			<p>乘129路到安徽合肥体育中心下，向北直行600米到安徽博物院。</p>
+			<p>乘166路、20路、128路到平塘站（翡翠路）下，向东行500米到安徽博物院。</p>
+		</div>
+		<div class="wen">
+			<p class="bt">老馆:</p>
+			<p>乘2、162、30、901路公交车到博物馆站下。</p>
+			<p>
+				乘13、112、114、123、126、132、136、162、166、168、232、801、706路公交车到城隍庙站下，向南至安庆路再向西到博物馆。
+			</p>
+			<p>
+				乘1、3、9、13、17、110、112、115、116、122、124、126、132、133、162、701路公交车到三孝口站下，向北100米到博物馆。
+			</p>
+		</div>
+	</div>
+</body>
+	<script type="text/javascript" src="api.js"></script>
+	<script type="text/javascript">
+    apiready = function(){
+        fnInitPullRefresh()
+    };
+
+    	 function fnInitPullRefresh() {
+            api.setRefreshHeaderInfo({
+                visible: true,
+               
+                bgColor: '#fff',
+                textColor: '#ddd',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+                 api.refreshHeaderLoadDone();
+            });
+        };
+</script>
+</html>

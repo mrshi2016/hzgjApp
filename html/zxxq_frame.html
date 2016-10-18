@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="api.css"/>
+	<script type="text/javascript">
+	/*设置页面的文字部分*/
+		var html = document.documentElement;
+			function onWindowResize() {
+			    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+			}
+		window.addEventListener('resize', onWindowResize);
+		onWindowResize();
+	</script>
+<style type="text/css">
+/*公共样式*/
+	html,body{height: 100%; width:100%;}
+	li{list-style: none;}
+	*{padding:0;margin:0;}
+	a{text-decoration: none;color:#999;}
+	.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+	.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+	/*公共样式结束*/
+	.main{width: 100%;}	
+	.header{width: 100%; height:2.34rem;position:fixed;top: 0;background: #F9F9F9;z-index: 999;}
+	.header ul li{ float: left;}
+	.header ul li:nth-child(1) img{width: 0.66rem;}
+	.header ul li:nth-child(2) img{width: 1.1rem;}
+	.header ul li:nth-child(3) img{width: 1.2rem;}
+	.header ul li:nth-child(1){margin-left: 0.53rem;margin-top:0.64rem;}
+	.header ul li:nth-child(2){margin-left: 11.8rem;margin-top:0.6rem;}
+	.header ul li:nth-child(3){margin-left: 1.6rem;margin-top:0.64rem;}
+	.close{width: 2rem; height: 2.34rem;}
+	</style>
+</head>
+<body>
+<!-- 展讯详情头部 -->
+	<section class="main">
+		<div class="header clearfix" id="header">
+			<ul class="clearfix">
+				<li class="close" tapmode onclick="api.closeWin()">
+					<img src="../img/fh_03.png" alt="" />
+				</li>
+				<li>
+					<img id="share" src="../img/fx_03.png" onclick="fnShare()" alt="" />
+				</li>
+				<li>
+					<img id="cl" onclick="Fcollect()" src="../img/cc_03.png" alt="" />
+				</li>
+			</ul>
+		</div>
+  
+	</section>
+	 
+</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/globalData.js"></script>
+    <script type="text/javascript" src="../script/localdb.js"></script>
+    <script type="text/javascript" src="../script/weixin.js"></script>
+	<script type="text/javascript">
+	var header;
+	var exhId;
+	var _data;
+    apiready = function(){
+    	header = $api.byId('header');
+    	headerHeight = $api.offset(header).h;
+        exhId = api.pageParam.id;
+        if(api.pageParam.dlList == 'dl'){
+        	_data = api.pageParam.Dldata;
+        	_data.collect='0';
+        	fnInitData(_data);
+        	fnInitFrame(_data);
+        }
+        if(api.pageParam.list == 'grsclist'){
+        	_data = exhId;
+        } else if(api.pageParam.list == 'showFrame'){
+        	_data = exhId;
+        	fnInitFrame(exhId);
+        }
+       // alert(JSON.stringify(_data))
+        if(api.pageParam.list == 'grsclist'){
+          api.ajax({
+            url: globalConfig.scxqUrl+'id='+ api.pageParam.scId,
+            method: 'post',
+            timeout:40,
+            cache:true,
+            data: {},
+            files: { 
+                  file: ''
+             }
+            },function(ret, err){
+                if (ret) {
+					_data = ret;
+					_data.collect = '1';
+					setClect();
+					if(_data == '' || _data.artworks == undefined){
+						exhId = api.pageParam.scId;
+						api.toast({
+						    msg: '产品已下架',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+						setTimeout(api.closeWin,2000);
+						      fnInitDatabase(function(){
+				        	  fnRmoveCollect(exhId,function(ret,err){
+				               }); 
+						    });
+						return false;
+						}
+					fnInitFrame(_data);		
+                } else {
+                   api.toast({
+                        msg: '加载失败',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                   api.hideProgress();
+                }
+            });	
+        }else{
+        	
+        	fnInitData(_data);
+        }
+       	var shareBut = $api.byId('share');    
+      
+    };
+    function fnShare(){
+    	_data = exhId;
+    	/*alert(globalConfig.interfaceShaerUrl+_data.exhibitId)*/
+    	/*var str=_data.imgUrl;
+		var arr = str.split('/');
+		//alert(arr[3])
+		arr[3] = 'resize_50x50/'+ arr[3] ;
+		str = arr.join('/');*/
+    	var wx = api.require('wx');
+			wx.shareWebpage({
+			    apiKey: '',
+			    scene: 'timeline',
+			    title: _data.titleName,
+			    description: _data.exDescription,
+			    thumb:'fs://',
+			    contentUrl: globalConfig.interfaceShaerUrl+_data.id
+			}, function(ret, err){
+			    if(ret.status){
+			        alert('分享成功');
+			    }else{
+			        /*alert(err.code);*/
+			    }
+			});
+	}
+    function fnInitData(_data){
+    	api.showProgress({
+			    style: 'default',
+			    animationType: 'fade',
+			    title: '努力加载中...',
+			    /*text: '先喝杯茶...',*/
+			    modal: false
+			});
+    	api.hideProgress();
+    	setClect();
+    }
+    function setClect(){
+    	if(_data.collect=='1'){
+	       		$api.attr($api.byId('cl'),'src','../img/sx.png');
+	       }else {
+				$api.attr($api.byId('cl'),'src','../img/cc_03.png');
+	       }
+	       if(api.pageParam.list == 'grsclist'){
+	       	$api.attr($api.byId('cl'),'src','../img/sx.png');
+	       }
+          fnInitDatabase(function(r,e){
+            fnSelectAllCollect(function(ret,err){  
+                for(var i = 0;  i<ret.data.length;i++){
+                	if(_data.id == ret.data[i].exhibitId){
+                		$api.attr($api.byId('cl'),'src','../img/sx.png');
+                	}
+                }
+            });
+         });
+    }
+    /*设置收藏状态*/
+ var Fcollect = function(){
+         var curData = _data;
+       fnInitDatabase(function(){
+       	if(_data.collect=="1"){
+            fnRmoveCollect(curData.id,function(ret,err){
+            curData.collect="0";
+           		$api.attr($api.byId('cl'),'src','../img/cc_03.png'); 
+            });
+        }else {
+        	  fnRmoveCollect(curData.id,function(ret,err){
+               });
+            fnCollect(curData,function(ret,err){
+                curData.collect="1";
+                $api.attr($api.byId('cl'),'src','../img/sx.png');
+            });
+        }
+    });
+    /*点击小心发送事件在展讯页面获取心的状态*/
+    api.sendEvent({
+	    name: 'myEvents',
+	    extra: {key:_data.collect,curData:curData}
+	});
+ }
+ function fnInitFrame(_data){
+			api.openFrame({
+			    name: 'zxxq_content_frame',
+			    url: './zxxq_content_frame.html',
+			    rect: {
+			        x: 0,
+			        y: headerHeight,
+			        w: 'auto',
+			        h: api.frameHeight - headerHeight
+			    },
+			    pageParam: {
+                	id:api.pageParam.id,
+                	data:_data,
+                	dlData:_data,
+                	list:api.pageParam.list
+                	//collect:api.pageParam.collect
+            	},
+			    bounces: false,
+			    bgColor: 'rgba(0,0,0,0)',
+			    vScrollBarEnabled: false,
+			    hScrollBarEnabled: false
+			});
+		}
+</script>
+</html>

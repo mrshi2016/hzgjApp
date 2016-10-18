@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<script type="text/javascript">
+	/*设置页面的文字部分*/
+	var html = document.documentElement;
+		function onWindowResize() {
+		    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+		}
+	window.addEventListener('resize', onWindowResize);
+	onWindowResize();
+	</script>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<style type="text/css">
+	/*公共样式*/
+	html,body{height: 100%; width:100%;}
+	li{list-style: none;}
+	*{padding:0;margin:0;}
+	a{text-decoration: none;color:#999;}
+	.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+	.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+	/*公共样式结束*/
+	.contents{width: 100%;}
+	.content{ width: 18.93rem;margin: 0 auto;}
+	.content p{font-size: 0.69rem;color: #999999; margin-top:1rem;}
+	.list_content{border-top:1px solid #DDDDDD;margin-top:0.5rem;}
+	.list_content:first-child{border-top:none;}
+	.imgBox{float:left;width: 4rem;height:3rem;padding-top: 0.8rem; padding-bottom: 0.8rem;padding-right: 1rem; position: relative;}
+	.imgBox img{max-width: 4rem;max-height: 3rem; display: table-cell; text-align: center;line-height: 3rem; margin: 0 auto;}
+	.wenBox{float: left;}
+	.wenBox p:first-child{font-size: 0.85rem;color: #666666; margin-top:0.8rem;width: 13rem; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+	.wenBox p:last-child{font-size: 0.64rem;color: #999; margin-top:0.53rem;}
+    </style>
+</head>
+<body>
+	<div class="contents">
+		<div id="contents" class="content">
+		</div>
+	</div>
+</body>
+
+<script id="template" type="text/template">
+{{~ it:data}}
+	<div class="list_content clearfix" tapmode onclick="fnOpenWin('{{=data.exhibitId}}')">
+		<div class="imgBox">
+			<img src="{{=data.imgUrl == null||data.imgUrl=='' ? '../img/mrtp.png':data.imgUrl}}"  alt="" />
+		</div>
+		<div class="wenBox">
+			<p>{{=data.exhibitName}}</p>
+			<p>{{=data.startTime == 'undefined'|| data.startTime == ''  ? '' : data.endTime.substr(0,10) + '~'}}{{=data.endTime == 'undefined'|| data.endTime == ''  ? '' : data.endTime.substr(0,10)}}</p>
+		</div>
+	</div>
+	{{~}}
+</script>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/localdb.js"></script>
+	<script type="text/javascript" src="../script/globalData.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript">
+    apiready = function(){
+        fnInitPullRefresh();
+        fnInitData();
+
+    };
+    function fnInitData(){
+    	var arr=[];
+    	    fnInitDatabase(function(r,e){
+	            fnSelectAllCollect(function(ret,err){
+	            	//alert(JSON.stringify(ret));
+	            	for(var i = 0;  i<ret.data.length;i++){
+	            		if(ret.data[i].titleName != 'undefined'){
+	            			//alert(ret.data[i].exhibitName)
+	            			arr.push(ret.data[i]);
+	            		}
+	            	}
+	            	var template = $api.byId('template');
+			        var dot = doT.template(template.innerHTML);
+			        $api.byId("contents").innerHTML= dot(arr);
+	            });
+		   }); 
+    }
+    var  fnOpenWin = function (e){
+		api.openWin({
+		    name: 'zxxq_frame',
+		    url: 'zxxq_frame.html',
+		    bgColor:'#fff',
+		    vScrollBarEnabled:false,
+		    hScrollBarEnabled:false,
+		   pageParam: {
+		       scId:e,
+		       list:'grsclist'
+		      //collect:e.collect
+		    }
+		});
+	}
+
+     function fnInitPullRefresh() {
+        api.setRefreshHeaderInfo({
+            visible: true,
+            bgColor: '#fff',
+            textColor: '#ddd',
+            textDown: '下拉刷新',
+            textUp: '别拉了，放开我',
+            showTime: false
+        }, function(ret, err) {
+            api.refreshHeaderLoadDone();
+            fnInitData();
+        });
+    };
+
+</script>
+</html>

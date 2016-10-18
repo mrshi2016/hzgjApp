@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="api.css"/>
+	<script type="text/javascript">
+		/*设置页面的文字部分*/
+			var html = document.documentElement;
+				function onWindowResize() {
+				    html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+				}
+			window.addEventListener('resize', onWindowResize);
+			onWindowResize();
+		</script>
+	<style type="text/css">
+		/*公共样式*/
+			html,body{height: 100%; width:100%;}
+			li{list-style: none;}
+			*{padding:0;margin:0;}
+			a{text-decoration: none;color:#999;}
+			.clearfix:after {content: '\20';display: block;clear: both;visibility: hidden;}
+			.highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+		/*公共样式结束*/
+      .contents{width: 100%;}
+		.contents .content_img{-webkit-box-align: center;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+		.contents .content_img img{-webkit-box-flex: 1;max-width: 18.93rem;max-height: 18.93rem;}
+		.bg_box{background: #F9F9F9; border-bottom: 1px solid #DDDDDD;}
+		.contents .small_button{margin-top:0.8rem;padding-bottom: 0.8rem;}
+		.contents .small_button ul{-webkit-box-align: center;-webkit-box-pack: center;display:-webkit-box;display:-moz-box;}
+		.contents .small_button ul li{-webkit-box-flex: 3;height: 1rem;border-left: 1px solid #DDDDDD;}
+		.contents .small_button ul li:first-child{border-left: none;}
+		.contents .small_button ul li img{margin: 0 auto;display:block;max-width: 1.22rem;}
+		.wen{width:18.93rem; margin: 0 auto;}
+		.wen p{margin-top:0.42rem;font-size: 0.69rem;color: #666666; }
+		.wen p:nth-child(1){margin-top:1rem;font-size: 0.85rem;color: #333333;margin-top:0.85rem;}
+		.wen p:nth-child(2){margin-top:0.85rem;}
+		
+    </style>
+</head>
+<body>
+	<div class="contents" id="contents">
+		
+	</div>
+	<script id="template" type="text/template">
+	{{? it.artId == undefined}}
+		<div class="bg_box">
+			<div class="content_img">
+				<img onclick='ab("{{=it.conver}}")' src="{{=it.conver == null || it.conver  == ''?  '../img/mrtp.png':it.conver}}"/>
+			</div>
+			<div class="small_button">
+				<ul class="highlight-color">
+					<li>
+					<!-- <p>{{=it.audito == undefined ? '000':it.audito[0].filePath}}</p> -->
+						<img onclick="fnOpenAudio('{{=it.audito == undefined ? '':it.audito[0].filePath}}')" src="../img/sy_03.png" alt="" />
+					</li>
+					<li>
+						<img onclick="fnOpenVedio('{{=it.video == undefined ? '' :it.video[0].filePath}}')" src="../img/bf_03.png" alt="" />
+					</li>
+					<li>
+						<img  onclick="fnOpenSdUrl('{{=it.threeDime == undefined ?'' : it.threeDime[0].filePath}}')" src="../img/sd_03.png" alt="" />
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="wen">
+			<p>{{=it.titleName ==  undefined || it.titleName ==  ''? '': it.titleName }}</p>
+			<p>{{=it.bookName ==  undefined || it.bookName ==  ''? '': it.bookName }}</p>
+			<p>{{=it.niandai ==  undefined || it.niandai ==  ''? '':"年代:"+ it.niandai}}</p>
+			<p>{{=it.publishNianhao ==  undefined || it.publishNianhao == ''? '': "年代"+it.publishNianhao}}</p>
+			<p>{{=it.sikuleimin ==  undefined || it.sikuleimin ==  ''? '': "类名："+it.sikuleimin}}</p>
+			<p>{{=it.zhuzuo ==  undefined || it.zhuzuo ==  ''? '': "责任者："+ it.zhuzuo}}</p>
+			<p>{{=it.dimesion ==  undefined || it.dimesion ==  ''? '': "尺寸："+it.dimesion}}</p>
+			<p>{{=it.tezheng ==  undefined || it.tezheng ==  ''? '': "形态特征："+ it.tezheng}}</p>
+			<p>{{=it.juanshu ==  undefined || it.juanshu ==  ''? '': "卷数："+ it.juanshu}}</p>
+		</div>
+		{{??}}
+			<div class="bg_box">
+			<div class="content_img">
+				<img onclick='ab("{{=it.artImgUrl}}")' src="{{=it.artImgUrl == null || it.artImgUrl  == ''?  '../img/mrtp.png':it.artImgUrl}}"/>
+			</div>
+			<div class="small_button">
+				<ul class="highlight-color">
+						<li>
+						<img onclick="fnOpenAudio('{{=it.audioUrl == undefined ? '':it.audioUrl}}')" src="../img/sy_03.png" alt="" />
+					</li>
+					<li>
+						<img onclick="fnOpenVedio('{{=it.videoUrl == undefined ? '' :it.videoUrl}}')" src="../img/bf_03.png" alt="" />
+					</li>
+					<li>
+						<img  onclick="fnOpenSdUrl('{{=it.url3D == undefined ?'' : it.url3D}}')" src="../img/sd_03.png" alt="" />
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="wen">
+			<p>{{=it.artName ==  '' || it.artName == undefined? '': it.artName }}</p>
+			<p>{{=it.year ==  '' ||it.year== undefined ?'': "年代："+ it.year}}</p>
+			<p>{{=it. catogoryType ==  undefined ||it. catogoryType== ''? '':" 类名:" +it. catogoryType}}</p>
+			<p>{{=it.zhuzuo ==  undefined ||it.zhuzuo== ''? '':"责任者:" +it.zhuzuo}}</p>
+			<p>{{=it.dimesion ==  undefined ||it.dimesion== ''? '': "尺寸："+it.dimesion}}</p>
+			<p>{{=it.artDes ==  undefined ||it.artDes== ''? '':"形态特征：" +it.artDes}}</p>
+			<p>{{=it.juanshu ==  undefined ||it.juanshu== ''? '':"卷数：" +it.juanshu}}</p>
+
+		</div>
+		{{?}}
+	</script>
+</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js"></script>
+	<script type="text/javascript" src="../script/globalData.js"></script>
+	<script type="text/javascript">
+	 var myartId,myData,mylist;
+    apiready = function(){
+    myData = api.pageParam.data;
+    mylist = api.pageParam.list;
+    myartId = api.pageParam.id;	
+        fnInitPullRefresh();
+     
+		fnInitData(myartId);
+		/*alert(JSON.stringify(myData.))*/
+    };
+
+    function ab(url){
+    	login_name = encodeURI(url);  	
+    	var imageBrowser = api.require('imageBrowser');
+		imageBrowser.openImages({
+		    imageUrls: [ 
+		     login_name
+		    ],
+		    showList:false,
+		    activeIndex:0
+		});
+    }
+    /*初始化数据*/
+    function fnInitData(myartId){
+    	if(mylist ==  'list'){
+    		api.showProgress({
+			    style: 'default',
+			    animationType: 'fade',
+			    title: '努力加载中...',
+			    /*text: '先喝杯茶...',*/
+			    modal: false
+			});
+    		api.ajax({
+    			url: globalConfig.jpXqUrl+'?'+'artId'+'='+myartId,
+                method: 'get',
+                timeout:40,
+                cache:true,
+                data: {
+                /*	artId:myartId*/
+                },
+             
+                },function(ret, err){
+	                if (ret) {
+	                	var str = getImagePoster(ret.result.artImgUrl,'414x414');
+	                	ret.result.artImgUrl = str;
+	                	api.hideProgress();
+	                	var template = $api.byId('template');
+	                	var dot = doT.template(template.innerHTML);
+						$api.byId("contents").innerHTML= dot(ret.result);
+	                	
+	                } else {
+	                    //alert(JSON.stringify(err));
+	                     api.toast({
+						    msg: '加载失败',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+	                    api.hideProgress();
+	                }
+	            });
+
+    	}else if(mylist == 'ewm'){
+    		
+    		api.ajax({
+    			url: globalConfig.ssCpList+'?'+'searchKey'+'='+myartId,
+                method: 'get',
+                timeout:40,
+                cache:true,
+                data: {
+                /*	artId:myartId*/
+                },
+             
+                },function(ret, err){
+	                if (ret) {
+	                	api.hideProgress();
+	                	var template = $api.byId('template');
+	                	var dot = doT.template(template.innerHTML);
+						$api.byId("contents").innerHTML= dot(ret.artList[0]);
+	                } else {
+	                    //alert(JSON.stringify(err));
+	                     api.toast({
+						    msg: '加载失败',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+	                    api.hideProgress();
+	                }
+	            });
+    	}else{
+    		api.hideProgress();
+	    	var template = $api.byId('template');
+	    	var dot = doT.template(template.innerHTML);
+			$api.byId("contents").innerHTML= dot(myData);
+			 api.hideProgress();	
+    	}
+    	
+    }
+    /*打开视频*/
+    function fnOpenVedio(videoUrl){
+	      if(videoUrl == '' || videoUrl =='undefined'){
+				api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+			}else{
+				api.openVideo({
+			   	 url: videoUrl
+				});
+			}
+    } 
+	/*打开3D*/
+    function fnOpenSdUrl(sdUrl){
+
+    		if(sdUrl == '' || sdUrl == 'undefined'){
+    			api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+    		}else{
+    			/*api.openWin({
+		            name: 'panoramaUrl',
+		            url: sdUrl,
+		            alone:true,
+		            bgColor:'#fff',
+		            vScrollBarEnabled:false,
+		            hScrollBarEnabled:false
+		        });*/
+		        var browser = api.require('webBrowser');
+					browser.openView({
+					    url:sdUrl,
+					    rect:{
+					        x:0,
+					        y:0,
+					        w:'auto',
+					        h:'auto'
+					    }
+					}, function(ret, err){
+					    switch (ret.state) {
+					        case 0:
+					            break;
+					        case 1:
+					            break;
+					        case 2:
+					            break;
+					        case 3:
+					            break;
+					        case 4:
+					            break;
+					        default:
+					            break;
+					    }
+					});
+    		}
+    	}
+    	var bool = false;
+    	/*打开音频*/
+    	function fnOpenAudio(audioUrl){
+    		/*var audioUrl = 'http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3'*/
+    		if(audioUrl == '' || audioUrl == 'undefined'){
+    			api.toast({
+				    msg: '暂时没有内容',
+				    duration: 2000,
+				    location: 'bottom'
+				});
+    		}else{
+    			if(bool == false){
+    				var audio = api.require('audio');
+					audio.play({
+					     path: audioUrl
+					},function( ret ){        
+					    if( ret ){
+					        /*alert( JSON.stringify( ret ) );*/
+					    }
+					});
+					bool =true;
+    			}else{
+    				var audio = api.require('audio');
+					audio.pause();
+					bool=false;
+    			}
+    			
+    		}
+    		
+    	}
+    function fnInitPullRefresh() {
+            api.setRefreshHeaderInfo({
+                visible: true,
+               
+                bgColor: '#fff',
+                textColor: '#ddd',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+                api.showProgress({
+			    style: 'default',
+			    animationType: 'fade',
+			    title: '努力加载中...',
+			    /*text: '先喝杯茶...',*/
+			    modal: false
+			});
+    		api.ajax({
+    			url: globalConfig.jpXqUrl+'?'+'artId'+'='+myartId,
+                method: 'get',
+                timeout:40,
+                cache:true,
+                data: {
+                /*	artId:myartId*/
+                },
+             
+                },function(ret, err){
+	                if (ret) {
+	                	
+	                	api.hideProgress();
+	                	api.refreshHeaderLoadDone();
+	                	/*alert(JSON.stringify(ret));*/
+	                } else {
+	                    //alert(JSON.stringify(err));
+	                     api.toast({
+						    msg: '加载失败',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+	                    api.hideProgress();
+	                }
+	            });
+    			api.parseTapmode();
+            });
+        };
+</script>
+</html>

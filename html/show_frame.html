@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <script type="text/javascript">
+        /*设置页面的文字部分*/
+    var html = document.documentElement;
+        function onWindowResize() {
+            html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px';
+        }
+    window.addEventListener('resize', onWindowResize);
+    onWindowResize();
+    </script>
+    <style>
+body{background-color: transparent;}
+    /*公共样式*/
+    html,body{height: 100%; width:100%;}
+    li{list-style: none;}
+    *{padding:0;margin:0;}
+    a{text-decoration: none;color:#999;}
+    .highlight-color{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+/*公共样式结束*/  
+    .imgBox{width: 100%;position: relative;}
+    .scImg{position:absolute;width: 1.2rem;max-width: 1.2rem; right: 1rem; bottom: 0.6rem;}
+    .imgBox img:first-child{max-width:18.93rem; max-height:18.93rem; display: block; margin: 0 auto;}
+    .wen{width:18.93rem; margin: 0 auto;}
+    .wen p.name{font-size: 0.85rem; margin-top:1rem;width:18.93rem; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;color:#333;}
+    .wen p.time{margin-top:0.8rem;font-size: 0.69rem;color:#666; padding-bottom: 1rem; border-bottom: 1px solid #ddd;}
+    .show_content{margin-top:1rem;}
+    .show_content:first-child{margin-top:0;}
+    </style>
+</head>
+<body>
+    <div id="contents" class="content">
+
+    </div>
+</body>
+<!-- 展讯页面 -->
+    <script id="template" type="text/template">
+        {{~ it:e:index }} 
+      <div class="show_content">
+            <div class="imgBox">
+                <img tapmode onclick="fnOpenWin({{=index}})"  src="{{=e.cover == null||e.imgUrl=='' ? '../img/mrtp.png':e.cover}}"/> 
+                <img class="scImg" id="collect_{{=e.id}}"  src="../img/{{= e.collect==1?'sx.png':'sc.png'}}" onclick="collect('{{=e.id}}')"/>
+            </div>
+            <div class="wen">
+                <p class="name" id="wen">{{= e.titleName == undefined?'':e.titleName}}</p>
+                <p class="time">展览时间:{{=e.startDate ==  undefined? '': e.startDate.substr(0,10) + '~'}}{{= e.endDate ==  undefined? '': e.endDate.substr(0,10)}}</p>
+            </div>
+        </div>
+       {{~}}
+    </script>
+
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/globalData.js"></script>
+    <script type="text/javascript" src="../script/localdb.js"></script>
+    <script type="text/javascript">
+    var exhibit;
+
+    apiready = function(){
+     
+        /*监听事件改变收藏状态图标*/
+         api.addEventListener({
+                name: 'myEvents'
+            }, function(ret){
+                if(ret.value.key == '1'){
+                    $api.attr($api.byId("collect_"+ret.value.curData.id),'src','../img/sc.png');
+                }else{
+                     $api.attr($api.byId("collect_"+ret.value.curData.id),'src','../img/sx.png'); 
+                     
+                }
+            });
+            fnInitData();
+            fnInitPullRefresh();
+    };
+
+/*初始化数据*/
+var datas = [];
+var exhibits =[];
+function fnInitData(){
+
+    fnInitDatabase(function(r,e){
+        if(api.pageParam.type == 0){
+            api.ajax({
+            url: globalConfig.zlListTj,
+            method: 'post',
+            timeout:40,
+            cache:true,
+            data: {},
+            files: { 
+                  file: ''
+             }
+            },function(ret, err){
+                if (ret) {
+
+                    api.hideProgress();
+                    exhibits = ret;
+                    $api.byId("contents").innerHTML = ('');
+                    var template = $api.byId('template');
+                    var dot = doT.template(template.innerHTML);
+                     for(var item = 0; item < exhibits.length; item++)
+                    {
+                        var str = getImagePoster(exhibits[item].conver,'414x414');
+                        exhibits[item].conver = str;
+                    }
+                    $api.byId("contents").innerHTML= dot(exhibits);
+                       fnInitDatabase(function(r,e){
+                        fnSelectAllCollect(function(ret,err){
+                            //alert(JSON.stringify(ret));
+                            for(var i = 0;  i<ret.data.length;i++){
+                                if(ret.data[i].titleName != 'undefined'){
+                                  //alert(ret.data[i].exhibitName)
+                                     $api.attr($api.byId("collect_"+ret.data[i].exhibitId),'src','../img/sx.png'); 
+                                }
+                            }
+                        });
+                     });
+                } else {
+                   api.toast({
+                        msg: '加载失败',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                   api.hideProgress();
+                }
+            });
+        }else{ 
+            api.ajax({
+            url: globalConfig.zlListUrl+'&menuId='+api.pageParam.type,
+            method: 'post',
+            timeout:40,
+            cache:true,
+            data: {},
+            files: { 
+                  file: ''
+             }
+            },function(ret, err){
+                if (ret) {
+                    api.hideProgress();
+                    exhibits = ret;
+                    $api.byId("contents").innerHTML = ('');
+                    var template = $api.byId('template');
+                    var dot = doT.template(template.innerHTML);
+                    $api.byId("contents").innerHTML= dot(exhibits);
+                    fnInitDatabase(function(r,e){
+                        fnSelectAllCollect(function(ret,err){
+                            //alert(JSON.stringify(ret));
+                            for(var i = 0;  i<ret.data.length;i++){
+                                if(ret.data[i].titleName != 'undefined'){
+                                  //alert(ret.data[i].exhibitName)
+                                     $api.attr($api.byId("collect_"+ret.data[i].exhibitId),'src','../img/sx.png'); 
+                                }
+                            }
+                        });
+                     });
+                    
+                } else {
+
+                   api.toast({
+                        msg: '加载失败',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                   api.hideProgress();
+                }
+            });
+        }
+       
+   });
+    datas = exhibits;     
+    api.parseTapmode();
+  }
+    /*设置收藏状态*/
+   var collect = function(e,isCollect){
+         var curData,index;
+         datas=exhibits;
+        for(var i=0;i<datas.length;i++){
+            if(datas[i].id==e){
+                curData=datas[i];
+                index=i;
+            }
+        }
+        if(curData.collect=="1"){
+            fnRmoveCollect(e,function(ret,err){
+                if(ret.status==true){
+                    datas[index].collect="0";
+                    $api.attr($api.byId("collect_"+curData.id),'src','../img/sc.png');
+                }
+                else {
+                    alert(err.msg);
+                }
+            });
+        }else {
+            fnRmoveCollect(curData.id,function(ret,err){
+                
+            });
+            fnCollect(curData,function(ret,err){
+                if(ret.status==true){
+                  datas[index].collect="1";
+               $api.attr($api.byId("collect_"+curData.id),'src','../img/sx.png');
+               }
+                else {
+                    alert(err.msg);
+                }
+            });
+        }
+    }
+   
+function fnInitPullRefresh(fineworkId) {
+            api.setRefreshHeaderInfo({
+                visible: true,
+                bgColor: '#fff',
+                textColor: '#ddd',
+                textDown: '下拉刷新',
+                textUp: '别拉了，放开我',
+                showTime: false
+            }, function(ret, err) {
+                    api.showProgress({
+                    style: 'default',
+                    animationType: 'fade',
+                    title: '努力加载中...',
+                    /*text: '先喝杯茶...',*/
+                    modal: false
+                    });
+                api.parseTapmode();
+                api.refreshHeaderLoadDone();
+                api.hideProgress();
+                fnInitData();
+            });
+        };
+
+var  fnOpenWin = function (e){
+/* alert(JSON.stringify(exhibits[e])*/
+api.openWin({
+    name: 'zxxq_frame',
+    url: 'zxxq_frame.html',
+    bgColor:'#fff',
+    vScrollBarEnabled:false,
+    hScrollBarEnabled:false,
+   pageParam: {
+       id:exhibits[e],
+       list:'showFrame'
+    }
+});
+}
+</script></html>
